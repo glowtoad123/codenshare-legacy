@@ -77,3 +77,22 @@
     border-radius: 6px;
     width: max-content;
 }
+
+.projectFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete {
+    width: 36px;
+    height: 36px;
+    vertical-align: middle;
+}
+
+.edit {
+    width: 36px; 
+    height: 36px;
+    cursor: pointer;
+    vertical-align: middle;
+}

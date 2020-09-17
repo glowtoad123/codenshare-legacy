@@ -8,15 +8,13 @@ export default function Navbar(){
     const [userId, setUserId] = useState("")
     const [navCheck, setNavCheck] = useState(false)
 
-    localForage.getItem("userId").then(id => 
-        setUserId(id)
-    ).catch(err => console.log(err))
-
     function toggleNav() {
         setNavCheck(current => !current)
     }
 
-    
+    localForage.getItem("yourKey").then(ret => {
+        setUserId(ret)
+    })
 
     return(
         <>
@@ -33,8 +31,8 @@ export default function Navbar(){
                         </a>
                     </Link>
                     {userId.length > 0 && 
-                        <Link href={`/account?title=${userId}`}>
-                            <a href="/account">
+                        <Link href="myaccount">
+                            <a>
                                 <Navprop pic='/user.svg' description="my account" />
                             </a>
                         </Link>
