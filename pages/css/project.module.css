@@ -1,0 +1,314 @@
+.head {
+    background: #CAD2C5;
+    border-radius: 12px;
+    width: max-content;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.head>img {
+    vertical-align: middle;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.creatorpic {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    border: none;
+    border-radius: 365px;
+    z-index: 0;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-right: 30px;
+}
+
+.descriptionDiv {
+    background-color: #CAD2C5;
+    height: 200px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+}
+
+.descriptionDiv:hover {
+    background-color: #CAD2C5;
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+}
+
+/*.descriptionText {
+    background-color: #CAD2C5;
+}*/
+
+.usernameLabel {
+    border: none;
+    border-radius: 0 6px 6px 0;
+    vertical-align: middle;
+    background-color: #2f3e46;
+    box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),;
+    color: white;
+}
+
+.changeName {
+    width: 178px;
+    height: 30px;
+    background: #FFFFFF;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+    text-align: center;
+    color: #2f3e46;
+    font-weight: bold;
+    margin: auto;
+    vertical-align: middle;
+}
+
+.creatorName {
+    display: inline-block;
+    font-size: 16px;
+    position: relative;
+    bottom: 25px;
+    margin-left: 12px;
+    z-index: 0;
+    background-color: #2f3e46;
+    color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+}
+
+.save {
+    width: 48px;
+    height: 48px;
+    margin-right: 20px;
+    margin-left: 20px;
+    vertical-align: middle;
+    margin-left: 20px;
+}
+
+.projectFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete {
+    width: 36px;
+    height: 36px;
+    vertical-align: middle;
+}
+
+.edit {
+                width: 36px; 
+                height: 36px;
+                cursor: pointer;
+                vertical-align: middle;
+}
+
+/* .description {
+    background-color: #ffffff;
+} */
+
+.textHead {
+    background-color: #b3c1b1;
+    display: inline-block;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0 6px 6px 0;
+}
+
+.display {
+    display: inline-block;
+    background-color: #cad2c5;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);    
+    border: none;
+    border-radius: 12px;
+    margin: 20px;
+    margin-top: 80px;
+    z-index: 0;
+    width: 300px;
+}
+
+.userDisplay {
+    background-color: #cad2c5;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);    
+    border: none;
+    border-radius: 12px;
+    /*margin: 20px;
+    margin-top: 80px;*/
+    width: 450px;
+    margin: auto;
+    margin-top: 80px;
+    z-index: 0;
+    align-items: center;
+}
+
+.text {
+    background-color: #ffffff;
+}
+
+.respository{
+    width: max-content;
+    background-color: #2f3e46;
+    box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),;
+    color: white;
+    z-index: 0;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    vertical-align: middle;
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.tags {
+    display: inline-block;
+    flex-direction: row;
+    background-color: #84a98c;
+    color: black;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin: 12px;
+    border: none;
+    border-radius: 6px;
+    width: max-content;
+}
+
+.userDisplayTags {
+    display: inline;
+    color: black;
+    margin: 12px;
+    border: none;
+    border-radius: 6px;
+    overflow-x: hidden;
+    flex-direction: row;
+}
+
+.userDisplayTags:hover {
+    display: inline;
+    color: black;
+    margin: 12px;
+    border: none;
+    border-radius: 6px;
+    overflow-x: scroll;
+    flex-direction: row;
+}
+
+.displaytitle {
+    background-color: #2f3e46;
+    box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),;
+    color: white;
+    display: inline-block;
+    z-index: 0;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.button {
+    -moz-appearance:none !important;
+    margin: auto;
+    border: none;
+    display: inline;
+    vertical-align: center;
+    width: 24px; 
+    height: 24px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.searchtype {
+    -moz-appearance:none !important;
+    padding: 15px;
+    background-color: #cad2c5;
+    color: #2f3e46;
+    border: none;
+    font-weight: bold;
+    border-radius: 12px;
+    margin: 0;
+}
+
+.list {
+    background-color: #cad2c5;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+
+.tagDiv {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+}
+
+.tagDiv:hover {
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+}
+
+.changeDiv {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.changeDiv:hover {
+    overflow-x: scroll;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+.updateList {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.updateList:hover {
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.update {
+background-color: #b3c1b1;
+margin: 10px;
+padding: 10px;
+padding-left: 0;
+border: none;
+border-radius: 10px;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+width: 300px;
+}
+
+.changelogLabel {
+background-color: #96a194;
+display: inline-block;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 0 6px 6px 0;
+font-size: 20px;
+}
+
+.inquisite {
+    display: none;
+    align-items: center;
+    background-color: #b3c1b1;
+    width: max-content;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0px 4px 4px rgba(90, 72, 72, 0.25);
+    margin: 20px 0 20px 0
+}
+
+.withininquisite {
+    margin: 10px;
+    font-weight: bold;
+}

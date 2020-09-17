@@ -1,65 +1,61 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React, {useState, useEffect} from 'react'
+import faunadb, { query as q } from "faunadb"
+import * as localForage from "localforage"
+import Preview from './components/preview'
+import Navbar from './navbar'
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+export default function Home(){
+    const [projectArray, setProjectArray] =  useState([])
+    const [offlineArray, setOfflineArray] = useState([])
+    const [idArray, setIdArray] = useState([])
+    const [networkStatus, setNetworkStatus] = useState(false)
+    
+    var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+    projectArray.length == 0 && serverClient.query(
+        q.Map(
+            q.Paginate(q.Match(q.Index("projects"))),
+            q.Lambda("X", q.Get(q.Var("X")))
+        )
+    ).then(ret => {
+        setProjectArray(ret.data.map(project => project.data)),
+        setIdArray(ret.data.map(work => work.ref.id)),
+        localForage.setItem("projectList", ret.data.map(project =>
+            project.data
+        )).then(ret => 
+            console.log("has been set")
+         ).catch(err => console.log(err)),
+        setNetworkStatus(true)
+    })
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    offlineArray !== null && localForage.getItem("projectList").then(project => {
+        setindexedArray(project);
+    }).then(
+        ret => console.log("got data")
+     ).catch(err => console.log(err))
+    
+    
+    
+    return(
+        <>
+            <Navbar />
+            {networkStatus && offlineArray !== null ? projectArray.map(
+                (project, index) => <Preview 
+                    id={idArray[index]}
+                    project={project.Project_Title}
+                    description={project.Description}
+                    creator={project.Creator}
+                    categories={project.Categories}
+                />
+            ) : offlineArray.map(
+                (project, index) => <Preview 
+                    id={idArray[index]}
+                    project={project.Project_Title}
+                    description={project.Description}
+                    creator={project.Creator}
+                    categories={project.Categories}
+                />)
+            }
+        </>
+    )
 }
