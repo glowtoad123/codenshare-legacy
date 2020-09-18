@@ -12,7 +12,7 @@
 
 .displaytitle {
     background-color: #2f3e46;
-    box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),;
+    /* box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),; */
     color: white;
     display: inline-block;
     z-index: 0;
@@ -22,7 +22,8 @@
 }
 
 .descriptionDiv {
-    background-color: #CAD2C5;
+    background-color: #e1e9e6;
+    width: inherit;
     height: 200px;
     overflow-y: hidden;
     overflow-x: hidden;
@@ -32,7 +33,7 @@
 }
 
 .descriptionDiv:hover {
-    background-color: #CAD2C5;
+    background-color: #e1e9e6;
     height: 200px;
     overflow-y: scroll;
     overflow-x: scroll;

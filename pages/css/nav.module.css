@@ -37,3 +37,7 @@
     color: white;
     margin: auto;
 }
+
+.search {
+    cursor: pointer;
+}

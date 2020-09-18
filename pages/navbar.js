@@ -8,6 +8,7 @@ import Search from './components/search'
 export default function Navbar(){
     const [userId, setUserId] = useState("")
     const [navCheck, setNavCheck] = useState(false)
+    const [searchStatus, setSearchStatus] = useState(false)
 
     function toggleNav() {
         setNavCheck(current => !current)
@@ -16,6 +17,11 @@ export default function Navbar(){
     localForage.getItem("yourKey").then(ret => {
         setUserId(ret)
     })
+
+    function switchToSearch(){
+        setNavCheck(false)
+        setSearchStatus(current => !current)
+    }
 
     return(
         <>
@@ -44,10 +50,14 @@ export default function Navbar(){
                                 <Navprop pic='/login.svg' description="login/switch account" />
                             </a>
                         </Link>
+                        <div className={styles.search} onClick={switchToSearch}>
+                            <Navprop pic='/search.png' description="search" />
+                        </div>
+                        
                     </div>
-                    <Search />
                 </>
                 }   
+                {searchStatus && <Search />}
                 <img onClick={toggleNav} src="/navpreview.svg" className={styles.navtoggle} />
         </>
     )
