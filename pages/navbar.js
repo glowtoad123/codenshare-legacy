@@ -32,7 +32,7 @@ export default function Navbar(){
                                 <Navprop pic='/plus.svg' description="add" />
                             </a>
                         </Link>
-                        {userId.length > 0 && 
+                        {userId && userId.length > 0 && 
                             <Link href="myaccount">
                                 <a>
                                     <Navprop pic='/user.svg' description="my account" />

@@ -35,7 +35,7 @@ export default function Register(props){
                 <button 
                     className={styles.submit} 
                     onClick={props.authenticate}
-                >Login
+                >Register
                 </button>
             </a></Link>
         </div>

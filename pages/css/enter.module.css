@@ -30,13 +30,14 @@
     background-color: #cad2c5;
     border: none;
     border-radius: 12px;
-    width: 500px;
     margin: auto;
     box-shadow: 0 3.2px 7.2px 0 rgba(0, 0, 0, 0.132), 0 0.6px 1.8px 0 rgba(0, 0, 0, 0.108);
     margin-bottom: 50px;
     align-items: center;
     display: flex;
     flex-direction: column;
+    width: max-content;
+    padding: 20px 40px 0 40px;
 }
 
 .or {

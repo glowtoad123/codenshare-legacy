@@ -12,7 +12,6 @@ export default function Project() {
     const [yourKey, setYourKey] = useState("")
     const [receivedKey, setReceivedKey] = useState("")
     const [projectData, setProjectData] = useState({})
-    const [creatorId, setCreatorId] = useState("")
     const [linkList, setLinkList] = useState([])
     const [roadmap, setRoadmap] = useState([])
     const [Categories, setCategories] = useState([])
@@ -49,7 +48,6 @@ export default function Project() {
             q.Match(q.Index("dublicateUsername"), creator)
         )
     ).then(ret => {
-        setCreatorId(ret.ref.id);
         setReceivedKey(ret.data.password);
         console.log(ret.data.password)
     })
@@ -104,7 +102,7 @@ export default function Project() {
                 </div>
                 <br />
                 <br />
-                <Link href={`/account?title=${creatorId}`}><a className={styles.creatorName}><strong>{projectData.Creator}</strong></a></Link>
+                <Link href={`/account?title=${projectData.Creator}`}><a className={styles.creatorName}><strong>{projectData.Creator}</strong></a></Link>
                 <br />
                 <a className={styles.respository} href={projectData.Repository}>{projectData.Repository}</a>
                 <br />

@@ -31,18 +31,24 @@
    inkscape:pageopacity="0"
    inkscape:pageshadow="2"
    inkscape:window-width="1366"
-   inkscape:window-height="692"
+   inkscape:window-height="699"
    id="namedview41"
    showgrid="false"
    inkscape:zoom="0.4609375"
-   inkscape:cx="-445.83051"
+   inkscape:cx="-58.576271"
    inkscape:cy="256"
    inkscape:window-x="0"
    inkscape:window-y="0"
    inkscape:window-maximized="1"
    inkscape:current-layer="Capa_1" />
-
-
+<path
+   style="fill:#cad2c5;fill-opacity:1"
+   d="M256,0C115.3,0,0,115.3,0,256s115.3,256,256,256s256-115.3,256-256S396.7,0,256,0z"
+   id="path2" />
+<path
+   style="fill:#b3c1b1;fill-opacity:1"
+   d="M512,256c0,140.7-115.3,256-256,256V0C396.7,0,512,115.3,512,256z"
+   id="path4" />
 <polygon
    style="fill:#354f52;fill-opacity:1"
    points="406,226 406,286 286,286 286,406 226,406 226,286 106,286 106,226 226,226 226,106 286,106   286,226 "
