@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import faunadb, { query as q } from "faunadb"
 import Navbar from './navbar'
 import Link from 'next/link'
+import * as localForage from "localforage"
 import Preview from './components/preview'
 import styles from './css/account.module.css'
 
@@ -14,6 +15,10 @@ export default function Account(){
 
     const router = useRouter()
     const creatorName = router.query.title
+
+    localForage.getItem("userName").then(ret =>
+        ret === creatorName && router.push("/myaccount")
+    )
 
     projectsArray.length === 0 && serverClient.query(
         q.Map(

@@ -25,3 +25,12 @@
     cursor: pointer;
     vertical-align: middle;
 }
+
+.save {
+    width: 48px;
+    height: 48px;
+    margin-right: 20px;
+    margin-left: 20px;
+    vertical-align: middle;
+    margin-left: 20px;
+}

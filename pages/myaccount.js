@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
+import crypto from 'crypto'
 import faunadb, { query as q } from "faunadb"
 import Navbar from './navbar'
 import Link from 'next/link'
@@ -11,7 +12,9 @@ export default function Myaccount(){
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
 
     const [userName, setUserName] = useState("")
+    const [userId, setUserId] = useState("")
     const [yourKey, setYourKey] = useState("")
+    const [receivedKey, setReceivedKey] = useState("")
     const [projectsArray, setProjectsArray] = useState([])
     const [projectsIdArray, setProjectsIdArray] = useState([])
     const [deleteStatus, setDeleteStatus] = useState(false)
@@ -22,6 +25,10 @@ export default function Myaccount(){
     
     localForage.getItem("yourKey").then(ret => {
         setYourKey(ret)
+    })
+
+    localForage.getItem("userId").then(ret => {
+        setUserId(ret)
     })
 
     projectsArray.length === 0 && serverClient.query(
@@ -35,6 +42,14 @@ export default function Myaccount(){
         setProjectsArray(ret.data.map(project => project.data));
         setProjectsIdArray(ret.data.map(project => project.ref.id))
     })
+
+    receivedKey.length === 0 && serverClient.query(
+        q.Get(
+            q.Ref(q.Collection("Accounts"), userId)
+        )
+    ).then(ret => {setReceivedKey(ret.data.password); console.log(ret.data.password)})
+
+    console.log(receivedKey)
 
     function deleteProject(event){
         var confirmDeletion = confirm("Are you sure you want to delete that project?");
@@ -64,19 +79,84 @@ export default function Myaccount(){
         setDeleteStatus(false)
     })
 
+    function updateName(event){
+
+        var changeuserName = prompt("please update your username")
+
+        if (changeuserName !== "" && changeuserName !== null) {
+            var updatePassword = prompt("please enter your old password or change your password to continue")
+            if(updatePassword !== "" && updatePassword !== null) {
+                const hashedPassword = updatePassword + changeuserName
+                const hash = crypto.createHash('sha256')
+                hash.update(hashedPassword)
+                const alphaPassword = hash.digest("hex")
+                console.log("alphaPassword: " + alphaPassword)
+                crypto.pbkdf2(alphaPassword, 'salt', 10, 64, 'sha512', (err, derivedKey) => {
+                    if (err) throw err;
+                    serverClient.query(
+                        q.Get(
+                          q.Match(q.Index('dublicateUsername'), changeuserName)
+                        )
+                      )
+                      .then((ret) => {console.log(ret.data.username); alert("Sorry, but this username has alread been taken")}, (err) => {
+                        serverClient.query(
+                            q.Update(
+                              q.Ref(q.Collection("Accounts"), userId),
+                              { data: {
+                                  username: changeuserName,
+                                  password: derivedKey.toString('hex')
+                                }},
+                            )
+                          )
+                          .then((ret) => {
+                              console.log(ret); 
+                              localForage.setItem("userName", changeuserName);
+                              localForage.setItem("yourKey", ret.data.password);
+                              localForage.setItem("userId", ret.ref.id)
+                            });
+                    
+                        projectsIdArray.map(id => {serverClient.query(
+                          q.Update(
+                            q.Ref(q.Collection('Projects'), id),
+                            { data: {Creator: changeuserName}},
+                          )
+                        )
+                        .then((ret) => console.log(ret))})
+                      })
+
+                })
+            } else {
+                alert("username not changed")
+            }
+        } else {
+            alert("username not changed")
+        }
+    }
+
     return(
         <>
         <Navbar />
-        {projectsArray.map((project, index) =>
-                <Advpreview 
-                    id={projectsIdArray[index]}
-                    project={project.Project_Title}
-                    description={project.Description}
-                    creator={project.Creator}
-                    categories={project.Categories}
-                    delete={deleteProject}
-
-                />)}
+        {yourKey === receivedKey ?
+            <>
+                <div className={styles.head}>
+                    <h1 className={styles.displaytitle}><strong>{userName}</strong></h1>
+                    <Link  className={styles.save} href={`/myaccount`}><a><img src="/edit.svg" className={styles.save} onClick={updateName}/></a></Link>
+                        
+                </div>
+                {projectsArray.map((project, index) =>
+                        <Advpreview 
+                            id={projectsIdArray[index]}
+                            project={project.Project_Title}
+                            description={project.Description}
+                            creator={project.Creator}
+                            categories={project.Categories}
+                            delete={deleteProject}
+                        />
+                )}
+            </>
+        :
+            <h1>sorry but no hackers are allowed to change another user's data</h1>
+        }
         </>
     )
 }
