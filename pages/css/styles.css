@@ -17,17 +17,7 @@ a {
     width: max-content;
 }
 
-.searchfield {
-    padding: 15px;
-    margin: auto;
-    border-radius: 0 12px 12px 0;
-    border: none;
-    display: inline;
-    vertical-align: center;
-    position: relative;
-    right: 21px;
-    box-shadow: 0 3.2px 7.2px 0 rgba(0, 0, 0, .132), 0 .6px 1.8px 0 rgba(0, 0, 0, .108)
-}
+
 
 .searchbutton {
     -moz-appearance:none !important;
@@ -53,7 +43,8 @@ a {
 .searchdiv {
     margin: 20px;
     border-radius: 12px;
-    box-shadow: 0 3.2px 7.2px 0 rgba(0, 0, 0, .132), 0 .6px 1.8px 0 rgba(0, 0, 0, .108)
+    box-shadow: 0 3.2px 7.2px 0 rgba(0, 0, 0, .132), 0 .6px 1.8px 0 rgba(0, 0, 0, .108);
+    background-color: #cad2c5;
 }
 
 .list {

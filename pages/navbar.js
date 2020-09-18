@@ -3,6 +3,7 @@ import Link from 'next/link'
 import * as localForage from "localforage"
 import styles from './css/nav.module.css'
 import Navprop from './components/navprop'
+import Search from './components/search'
 
 export default function Navbar(){
     const [userId, setUserId] = useState("")
@@ -19,30 +20,33 @@ export default function Navbar(){
     return(
         <>
             {navCheck && 
-                <div className={styles.navbar}>
-                    <Link href="/">
-                        <a href="/">
-                            <Navprop pic="/book.svg" description="projects" />
-                        </a>
-                    </Link>
-                    <Link href="/new">
-                        <a href="/new">
-                            <Navprop pic='/plus.svg' description="add" />
-                        </a>
-                    </Link>
-                    {userId.length > 0 && 
-                        <Link href="myaccount">
-                            <a>
-                                <Navprop pic='/user.svg' description="my account" />
+                <>
+                    <div className={styles.navbar}>
+                        <Link href="/">
+                            <a href="/">
+                                <Navprop pic="/book.svg" description="projects" />
                             </a>
                         </Link>
-                    }
-                    <Link href="/enter">
-                        <a href="/enter">
-                            <Navprop pic='/login.svg' description="login/switch account" />
-                        </a>
-                    </Link>
-                </div>
+                        <Link href="/new">
+                            <a href="/new">
+                                <Navprop pic='/plus.svg' description="add" />
+                            </a>
+                        </Link>
+                        {userId.length > 0 && 
+                            <Link href="myaccount">
+                                <a>
+                                    <Navprop pic='/user.svg' description="my account" />
+                                </a>
+                            </Link>
+                        }
+                        <Link href="/enter">
+                            <a href="/enter">
+                                <Navprop pic='/login.svg' description="login/switch account" />
+                            </a>
+                        </Link>
+                    </div>
+                    <Search />
+                </>
                 }   
                 <img onClick={toggleNav} src="/navpreview.svg" className={styles.navtoggle} />
         </>
