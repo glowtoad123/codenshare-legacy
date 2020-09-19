@@ -76,6 +76,7 @@
     border: none;
     border-radius: 6px;
     width: max-content;
+    cursor: pointer;
 }
 
 .projectFooter {

@@ -1,8 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
+import * as localForage from "localforage"
 import styles from '../css/preview.module.css'
 
 export default function Preview(props) {
+
+    function settingSelection(){
+        localForage.setItem("Selection", "categories")
+        localForage.setItem("foundStatus", true)
+    }
 
     return (
         <div className={styles.display}>
@@ -13,7 +19,11 @@ export default function Preview(props) {
             
             <Link href={`/account?title=${props.creator}`}><a className={styles.creatorName}><strong>{props.creator}</strong></a></Link>
             <br />
-            <div className={styles.tagDiv}>{props.categories.map(category => <p className={styles.tags}><strong>{category}</strong></p>)}</div>
+            <div className={styles.tagDiv}>{props.categories.map(category => 
+                <Link href={`/found?title=${category}`}>
+                    <p onClick={settingSelection} className={styles.tags}><strong>{category}</strong></p>
+                </Link>
+            )}</div>
         </div>
     )
 }
