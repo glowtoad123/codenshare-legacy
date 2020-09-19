@@ -116,7 +116,7 @@ export default function Project() {
                 <br />
                 <h1 className={styles.textHead}><strong>Roadmap</strong></h1>
                 <br />
-                {roadmap.length > 0 && roadmap.map(each => <p className={styles.tags}><strong>{each}</strong></p>)}
+                {roadmap.length > 0 && roadmap.map(each => <p className={styles.goal}><strong>{each}</strong></p>)}
                 <br />
                 <br />
                 <br />
