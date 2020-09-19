@@ -132,7 +132,7 @@ export default function Project() {
                             <h3 className={styles.changelogLabel}>Changelog</h3>
                             <br />
                             <div className={styles.changeDiv}>{changeLog[index].map(one => 
-                                <p className={styles.tags}><strong>{one}</strong></p>
+                                <p className={styles.change}><strong>{one}</strong></p>
                             )}</div></div>)})}
                         </div>}
             </div>
