@@ -22,7 +22,7 @@ export default function Project() {
     const router = useRouter()
     const projectId = router.query.title
 
-    yourKey.length == 0 && localForage.getItem("yourKey").then(ret => {
+    yourKey === "" && localForage.getItem("yourKey").then(ret => {
             
                 setYourKey(ret)
                 console.log(ret)
@@ -30,7 +30,7 @@ export default function Project() {
 
     console.log(projectData)
 
-    creator.length === 0 && serverClient.query(
+    creator === ""  && serverClient.query(
         q.Get(
             q.Ref(q.Collection("Projects"), projectId)
         )
