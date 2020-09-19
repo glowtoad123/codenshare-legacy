@@ -106,7 +106,7 @@ export default function Project() {
                 <br />
                 <a className={styles.respository} href={projectData.Repository}>{projectData.Repository}</a>
                 <br />
-                {linkList.length > 0 && LinkList.map(each => 
+                {linkList.length > 0 && linkList.map(each => 
                     <a 
                         className={styles.respository} 
                         href={each}>{each}
