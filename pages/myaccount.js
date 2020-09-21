@@ -11,6 +11,8 @@ import styles from './css/account.module.css'
 export default function Myaccount(){
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
 
+    const router = useRouter()
+
     const [userName, setUserName] = useState("")
     const [userId, setUserId] = useState("")
     const [yourKey, setYourKey] = useState("")
@@ -121,7 +123,10 @@ export default function Myaccount(){
                             { data: {Creator: changeuserName}},
                           )
                         )
-                        .then((ret) => console.log(ret))})
+                        .then((ret) => {
+                            console.log(ret);
+                            router.reload()
+                        })})
                       })
 
                 })
@@ -140,7 +145,7 @@ export default function Myaccount(){
             <>
                 <div className={styles.head}>
                     <h1 className={styles.displaytitle}><strong>{userName}</strong></h1>
-                    <Link  className={styles.save} href={`/myaccount`}><a><img src="/edit.svg" className={styles.save} onClick={updateName}/></a></Link>
+                    <img src="/edit.svg" className={styles.save} onClick={updateName}/>
                         
                 </div>
                 {projectsArray.map((project, index) =>
