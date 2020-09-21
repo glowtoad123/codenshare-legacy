@@ -69,6 +69,11 @@ export default function Project() {
 
     const changeLog = update.map(change => change.Changes)
 
+    function settingSelection(){
+        localForage.setItem("Selection", "categories")
+        localForage.setItem("foundStatus", true)
+    }
+
     return(
         <>
             <Navbar />
@@ -122,7 +127,11 @@ export default function Project() {
                 <br />
                 <h1 className={styles.textHead}><strong>Categories</strong></h1>
                 <br />
-                {Categories.length > 0 && Categories.map(each => <p className={styles.tags}><strong>{each}</strong></p>)}
+                {Categories.length > 0 && Categories.map(category => 
+                    <Link href={`/found?title=${category}`}>
+                        <p onClick={settingSelection} className={styles.tags}><strong>{category}</strong></p>
+                    </Link>)
+                }
                 <br />
                 {<div className={styles.updateList}>{update.length > 0 && 
                     update.map((current, index) => {return (
