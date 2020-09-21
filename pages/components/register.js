@@ -31,13 +31,11 @@ export default function Register(props){
                 id={styles.password} 
                 placeholder="password" 
             />
-            <Link href="/"><a>
-                <button 
+            <button 
                     className={styles.submit} 
                     onClick={props.authenticate}
-                >Register
-                </button>
-            </a></Link>
+            >Register
+            </button>
         </div>
     )
 }

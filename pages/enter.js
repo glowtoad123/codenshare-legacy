@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { useRouter } from 'next/router'
 import faunadb, { query as q } from "faunadb"
 import crypto from 'crypto'
 import * as localForage from "localforage"
@@ -11,6 +12,8 @@ export default function Enter(){
     const [account, setAccount] = useState({})
     
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
+
+    const router = useRouter()
     
     useEffect(() => {
         localForage.getItem("isLoggedIn").then(ret => ret && (
@@ -44,7 +47,8 @@ export default function Enter(){
                 localForage.setItem("yourKey", ret.data.password);
                 localForage.setItem("userId", ret.ref.id);
                 localForage.setItem("userName", ret.data.username);
-                localForage.setItem("isLoggedIn", true)
+                localForage.setItem("isLoggedIn", true);
+                router.push("/")
             }, err => {
                 alert("you have not entered in your username or password correctly");
                 localForage.removeItem("userName")
@@ -86,7 +90,8 @@ export default function Enter(){
                                       localForage.setItem("yourKey", ret.data.password);
                                       localForage.setItem("userId", ret.ref.id);
                                       localForage.setItem("userName", ret.data.username);
-                                      localForage.setItem("isLoggedIn", true)
+                                      localForage.setItem("isLoggedIn", true);
+                                      router.push("/")
                                   })
                               }
                        )

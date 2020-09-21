@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { useRouter } from 'next/router'
 import faunadb, { query as q } from "faunadb"
 import styles from "./css/edit.module.css"
 import Navbar from "./navbar"
@@ -7,6 +8,8 @@ import * as localForage from "localforage"
 
 export default function New(){
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
+
+    const router = useRouter()
 
     const [projectData, setProjectData] = useState({})
     const [category, setCategory] = useState("")
@@ -110,7 +113,10 @@ export default function New(){
                     q.Collection("Projects"),
                     {data: projectData}
                 )
-            ).then(ret => console.log(ret.data))
+            ).then(ret => {
+                console.log(ret.data);
+                router.push("/")
+            })
         })
     }
 
@@ -263,14 +269,11 @@ export default function New(){
                         </div>
                     )}
                     
-                <Link href="/">
-                    <a><button 
+                <button 
                             onClick={addData} 
                             id={styles.submit} 
                             type="submit"
-                        >Save</button>
-                    </a>
-                </Link>
+                >Save</button>
             </div>
         </>
     )

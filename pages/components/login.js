@@ -23,13 +23,11 @@ export default function Login(props){
                 id={styles.password} 
                 placeholder="password" 
             />
-            <Link href="/"><a>
-                <button 
+            <button 
                     className={styles.submit} 
                     onClick={props.authenticate}
-                >Login
-                </button>
-            </a></Link>
+            >Login
+            </button>
         </div>
     )
 }
