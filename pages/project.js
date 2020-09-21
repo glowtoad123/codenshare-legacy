@@ -61,9 +61,9 @@ export default function Project() {
                     )
                 ).then(ret => {
                     console.log(ret);
-                    setDeleteStatus(true)
+                    setDeleteStatus(true);
+                    router.push("/")
                 })
-                alert("This project has been deleted")
             }
     }
 

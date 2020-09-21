@@ -141,6 +141,14 @@
     font-weight: bold;
 }
 
+.delete {
+    width: 36px;
+    height: 36px;
+    position: relative;
+    right: 0;
+    cursor: pointer;
+}
+
 .updateList {
         overflow-x: scroll;
         display: flex;

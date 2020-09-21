@@ -22,6 +22,7 @@ export default function Update(){
     const [roadmap, setRoadmap] = useState([])
     const [change, setChange] = useState("")
     const [changeLog, setChangeLog] = useState([])
+    const [updateList, setUpdateList] = useState([])
     const [version, setVersion] = useState("")
     const [versionButtonStatus, setVersionButtonStatus] = useState(false)
 
@@ -44,6 +45,7 @@ export default function Update(){
         setLinkList(ret.data.Links);
         setRoadmap(ret.data.Roadmap);
         setCategories(ret.data.Categories);
+        setUpdateList(ret.data.Update)
     })
 
     creator.length !== 0 && receivedKey.length === 0 && serverClient.query(
@@ -122,6 +124,12 @@ export default function Update(){
         })
     }
 
+    function removeUpdate(id){
+        setUpdateList(prev => {
+            return prev.filter((changeLog, index) => {return index !== id})
+        })
+    }
+
     function settingVersion(event){
         setVersion(event.target.value)
     }
@@ -134,10 +142,11 @@ export default function Update(){
         projectData.Categories = categories
         projectData.Roadmap = roadmap
         projectData.Links = linkList
-        version.length > 0 && projectData.Update.push({
+        version.length > 0 && updateList.push({
             Version: version,
             Changes: changeLog
         })
+        projectData.Update = updateList
         projectData.Creator = creator;
         serverClient.query(
             q.Update(
@@ -146,6 +155,9 @@ export default function Update(){
             )
         ).then(ret => console.log(ret.data))
     }
+
+    const versionList = updateList.map(update => update.Version)
+    const fullChangeLog = updateList.map(update => update.Changes)
 
     return(
         <>
@@ -299,6 +311,23 @@ export default function Update(){
                             </div>
 
                         )}
+                        <div className={styles.updateList}>
+                            {updateList && updateList.map((current, index) => {return (
+                                <div className={styles.update}>
+                                    <img 
+                                        src="/delete.svg"
+                                        className={styles.delete}
+                                        onClick={() => removeUpdate(index)}
+                                    />
+                                    <h2>Version {current.Version}</h2>
+                                    <h3 className={styles.changelogLabel}>Changelog</h3>
+                                    <br />
+                                    {fullChangeLog[index].map(one => 
+                                        <p className={styles.tags}><strong>{one}</strong></p>)
+                                    }
+                                </div>
+                            )})}
+                        </div>
                         
                     <Link href={`/project?title=${projectId}`}>
                         <a><button 
