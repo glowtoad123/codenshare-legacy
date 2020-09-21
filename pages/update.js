@@ -153,7 +153,10 @@ export default function Update(){
                 q.Ref(q.Collection("Projects"), projectId),
                     {data: projectData}
             )
-        ).then(ret => console.log(ret.data))
+        ).then(ret => {
+            console.log(ret.data);
+            router.push(`/project?title=${projectId}`)
+        })
     }
 
     const versionList = updateList.map(update => update.Version)
@@ -329,14 +332,11 @@ export default function Update(){
                             )})}
                         </div>
                         
-                    <Link href={`/project?title=${projectId}`}>
-                        <a><button 
+                    <button 
                                 onClick={addData} 
                                 id={styles.submit} 
                                 type="submit"
-                            >Save</button>
-                        </a>
-                    </Link>
+                    >Save</button>
                 </div>
         }
         </>
