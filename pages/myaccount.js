@@ -6,6 +6,7 @@ import Navbar from './navbar'
 import Link from 'next/link'
 import * as localForage from "localforage"
 import Advpreview from './components/advpreview'
+import Offlinepreview from './components/offlinepreview'
 import styles from './css/account.module.css'
 
 export default function Myaccount(){
@@ -19,6 +20,8 @@ export default function Myaccount(){
     const [receivedKey, setReceivedKey] = useState("")
     const [projectsArray, setProjectsArray] = useState([])
     const [projectsIdArray, setProjectsIdArray] = useState([])
+    const [networkStatus, setNetworkStatus] = useState(false)
+    const [offlineArray, setOfflineArray] = useState([])
     const [deleteStatus, setDeleteStatus] = useState(false)
 
     localForage.getItem("userName").then(ret => {
@@ -42,7 +45,10 @@ export default function Myaccount(){
         )
     ).then((ret, index) => {
         setProjectsArray(ret.data.map(project => project.data));
-        setProjectsIdArray(ret.data.map(project => project.ref.id))
+        setProjectsIdArray(ret.data.map(project => project.ref.id));
+        localForage.setItem("userProjectList", ret.data.map(project => project.data)).then(ret => {
+            setNetworkStatus(true);
+        });
     })
 
     receivedKey.length === 0 && serverClient.query(
@@ -50,8 +56,6 @@ export default function Myaccount(){
             q.Ref(q.Collection("Accounts"), userId)
         )
     ).then(ret => {setReceivedKey(ret.data.password); console.log(ret.data.password)})
-
-    console.log(receivedKey)
 
     function deleteProject(event){
         var confirmDeletion = confirm("Are you sure you want to delete that project?");
@@ -137,11 +141,20 @@ export default function Myaccount(){
             alert("username not changed")
         }
     }
+    
+
+    offlineArray && offlineArray.length === 0 &&
+            localForage.getItem("userProjectList").then(ret => {
+                setOfflineArray(ret)
+            })
+
+    console.log(offlineArray)
+    console.log("networkStatus: " + networkStatus)
 
     return(
         <>
         <Navbar />
-        {yourKey === receivedKey ?
+        {yourKey === receivedKey && networkStatus ?
             <>
                 <div className={styles.head}>
                     <h1 className={styles.displaytitle}><strong>{userName}</strong></h1>
@@ -150,6 +163,22 @@ export default function Myaccount(){
                 </div>
                 {projectsArray.map((project, index) =>
                         <Advpreview 
+                            id={projectsIdArray[index]}
+                            project={project.Project_Title}
+                            description={project.Description}
+                            creator={project.Creator}
+                            categories={project.Categories}
+                            delete={deleteProject}
+                        />
+                )}
+            </>
+        : !networkStatus ? 
+            <>
+                <div className={styles.head}>
+                    <h1 className={styles.displaytitle}><strong>{userName}</strong></h1>
+                </div>
+                {offlineArray && offlineArray.map((project, index) =>
+                        <Offlinepreview 
                             id={projectsIdArray[index]}
                             project={project.Project_Title}
                             description={project.Description}

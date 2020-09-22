@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import faunadb, { query as q } from "faunadb"
 import * as localForage from "localforage"
 import Preview from './components/preview'
+import Offlinepreview from './components/offlinepreview'
 import Navbar from './navbar'
 
 export default function Home(){
@@ -12,7 +13,7 @@ export default function Home(){
     
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
 
-    projectArray.length == 0 && serverClient.query(
+    !networkStatus && serverClient.query(
         q.Map(
             q.Paginate(q.Match(q.Index("projects"))),
             q.Lambda("X", q.Get(q.Var("X")))
@@ -28,10 +29,10 @@ export default function Home(){
         setNetworkStatus(true)
     })
 
-    offlineArray !== null && localForage.getItem("projectList").then(project => {
-        setindexedArray(project);
+    offlineArray && offlineArray.length === 0 && localForage.getItem("projectList").then(project => {
+        setOfflineArray(project);
     }).then(
-        ret => console.log("got data")
+        ret => console.log("got data"),
      ).catch(err => console.log(err))
     
     
@@ -39,7 +40,7 @@ export default function Home(){
     return(
         <>
             <Navbar />
-            {networkStatus && offlineArray !== null ? projectArray.map(
+            {networkStatus ? projectArray.map(
                 (project, index) => <Preview 
                     id={idArray[index]}
                     project={project.Project_Title}
@@ -47,8 +48,8 @@ export default function Home(){
                     creator={project.Creator}
                     categories={project.Categories}
                 />
-            ) : offlineArray.map(
-                (project, index) => <Preview 
+            ) : offlineArray && offlineArray.map(
+                (project, index) => <Offlinepreview 
                     id={idArray[index]}
                     project={project.Project_Title}
                     description={project.Description}
