@@ -14,11 +14,14 @@
     background-color: #2f3e46;
     /* box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),; */
     color: white;
-    display: inline-block;
+    /* display: inline-block; */
+    text-align: center;
     z-index: 0;
-    border-radius: 0 6px 6px 0;
+    border-radius: 12px 12px 0 0;
     cursor: pointer;
     vertical-align: middle;
+    padding: 20px;
+    margin: 0px;
 }
 
 .descriptionDiv {
