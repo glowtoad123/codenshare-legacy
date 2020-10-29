@@ -1,12 +1,13 @@
 #npform {
     background-color: #cad2c5;
-    width: 500px;
+    width: 50%;
     margin: auto;
     border-radius: 12px 12px 0 0;
 }
 
 #Project_Title {
-    width: inherit;
+    width: -webkit-fill-available;
+    width: -moz-available;
     border-radius: 12px 12px 0 0;
     text-align: center;
     font-size: 32px;
@@ -26,7 +27,8 @@
     }
 
 #Description {
-    width: inherit;
+    width: -webkit-fill-available;
+    width: -moz-available;
     height: 107px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -34,23 +36,27 @@
 }
 
 #Categories {
-    width: 198px;
+    width: 70%;
     height: 41px;
     display: inline;
     margin-right: 10px
 }
 
 #Repository {
-    width: 300px;
+    width: 95%;
     height: 41px;
     display: inline;
     margin-right: 10px
 }
 
 .tagsDiv {
-    overflow-x: scroll;
+    overflow-x: hidden;
     display: flex;
     flex-direction: row;
+}
+
+.tagsDiv:hover {
+    overflow-x: scroll;
 }
 
 .tags {
@@ -100,7 +106,8 @@
 }
 
 #Changes {
-    width: inherit;
+    width: -webkit-fill-available;
+    width: -moz-available;
     height: 177px;
     border-radius: 0;
 
@@ -109,7 +116,8 @@
 .versionDiv {
     background-color: #b3c1b1;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    width: inherit;
+    width: -webkit-fill-available;
+    width: -moz-available;
     overflow-x: scroll;
 }
 
@@ -136,7 +144,8 @@
     padding: 10px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     vertical-align: middle;
-    width: 500px;
+    width: -webkit-fill-available;
+    width: -moz-available;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
 }
@@ -173,3 +182,11 @@
     font-size: 20px;
 }
 
+@media screen and (max-width: 1024px){
+    #npform {
+        background-color: #cad2c5;
+        width: 90%;
+        margin: auto;
+        border-radius: 12px 12px 0 0;
+    }
+}
