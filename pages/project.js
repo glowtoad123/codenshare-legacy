@@ -78,7 +78,7 @@ export default function Project() {
         <>
             <Navbar />
             <div className={styles.userDisplay}>
-                <h1 className="displaytitle">
+                <h1 className={styles.displaytitle}>
                     <strong>{projectData.Project_Title}</strong>
                 </h1>
                 {yourKey === receivedKey && <div>

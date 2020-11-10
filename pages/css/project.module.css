@@ -57,6 +57,7 @@
     background-color: #2f3e46;
     box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),;
     color: white;
+
 }
 
 .changeName {
@@ -183,6 +184,7 @@
     border-radius: 6px;
     width: max-content;
     cursor: pointer;
+    padding: 10px;
 }
 
 .goal {
@@ -233,11 +235,11 @@
     background-color: #2f3e46;
     box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),;
     color: white;
-    display: inline-block;
     z-index: 0;
-    border-radius: 0 6px 6px 0;
+    border-radius: 12px 12px 0 0;
     cursor: pointer;
     vertical-align: middle;
+    text-align: center;
 }
 
 .button {
