@@ -1,101 +1,105 @@
 .display {
-    display: inline-block;
-    background-color: #cad2c5;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);    
-    border: none;
-    border-radius: 12px;
-    margin: 20px;
-    margin-top: 80px;
-    z-index: 0;
-    width: 300px;
+  display: inline-block;
+  background-color: #cad2c5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 12px;
+  margin: 20px;
+  margin-top: 80px;
+  z-index: 0;
+  width: 300px;
+}
+
+.display:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .displaytitle {
-    background-color: #2f3e46;
-    /* box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),; */
-    color: white;
-    /* display: inline-block; */
-    text-align: center;
-    z-index: 0;
-    border-radius: 12px 12px 0 0;
-    cursor: pointer;
-    vertical-align: middle;
-    padding: 20px;
-    margin: 0px;
+  background-color: #2f3e46;
+  /* box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),; */
+  color: white;
+  /* display: inline-block; */
+  text-align: center;
+  z-index: 0;
+  border-radius: 12px 12px 0 0;
+  cursor: pointer;
+  vertical-align: middle;
+  padding: 20px;
+  margin: 0px;
 }
 
 .descriptionDiv {
-    background-color: #e1e9e6;
-    width: inherit;
-    height: 200px;
-    overflow-y: hidden;
-    display: flex;
-    flex-direction: column;
-    vertical-align: middle;
+  background-color: #e1e9e6;
+  width: inherit;
+  height: 200px;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  vertical-align: middle;
 }
 
 .descriptionDiv:hover {
-    background-color: #e1e9e6;
-    height: 200px;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-    vertical-align: middle;
+  background-color: #e1e9e6;
+  height: 200px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  vertical-align: middle;
 }
 
 .creatorName {
-    display: inline-block;
-    font-size: 16px;
-    position: relative;
-    bottom: 25px;
-    margin-left: 12px;
-    background-color: #2f3e46;
-    color: white;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 6px;
+  display: inline-block;
+  font-size: 16px;
+  position: relative;
+  bottom: 25px;
+  margin-left: 12px;
+  background-color: #2f3e46;
+  color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
 }
 
 .tagDiv {
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: row;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: row;
 }
 
 .tagDiv:hover {
-    overflow-x: scroll;
-    display: flex;
-    flex-direction: row;
+  overflow-x: scroll;
+  display: flex;
+  flex-direction: row;
 }
 
 .tags {
-    display: inline-block;
-    flex-direction: row;
-    background-color: #2f3e46;
-    color: white;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin: 12px;
-    border: none;
-    border-radius: 6px;
-    padding: 10px;
-    width: max-content;
+  display: inline-block;
+  flex-direction: row;
+  background-color: #2f3e46;
+  color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 12px;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  width: max-content;
 }
 
 .projectFooter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .delete {
-    width: 36px;
-    height: 36px;
-    vertical-align: middle;
-    cursor: pointer;
+  width: 36px;
+  height: 36px;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 .edit {
-    width: 36px; 
-    height: 36px;
-    cursor: pointer;
-    vertical-align: middle;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  vertical-align: middle;
 }
