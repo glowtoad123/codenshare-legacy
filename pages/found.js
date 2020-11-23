@@ -5,6 +5,7 @@ import * as localForage from "localforage"
 import Preview from './components/preview'
 import Navbar from './navbar'
 import styles from './css/project.module.css'
+import { LinearProgress } from '@material-ui/core'
 
 export default function found(){
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
@@ -78,6 +79,7 @@ export default function found(){
         <Navbar />
         <h1 className={styles.textHead} style={{margin: "0"}}>Search Results</h1>
         <br />
+        {queriedList && queriedList.length === 0 && <LinearProgress />}
         {queriedList.map(project => 
             <Preview
                 id={project.ref.id}
