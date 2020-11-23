@@ -6,6 +6,7 @@ import Link from 'next/link'
 import * as localForage from "localforage"
 import Preview from './components/preview'
 import styles from './css/account.module.css'
+import { LinearProgress } from '@material-ui/core'
 
 export default function Account(){
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
@@ -48,6 +49,7 @@ export default function Account(){
                     creator={project.Creator}
                     categories={project.Categories}
                 />)}
+            {projectsArray.length === 0 && <LinearProgress />}
         </>
     )
 }

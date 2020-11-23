@@ -5,6 +5,7 @@ import Navbar from './navbar'
 import Link from 'next/link'
 import styles from './css/edit.module.css'
 import * as localForage from "localforage"
+import { LinearProgress } from '@material-ui/core'
 
 export default function Update(){
 
@@ -165,6 +166,7 @@ export default function Update(){
     return(
         <>
         <Navbar />
+        {receivedKey === "" && <LinearProgress />}
         {yourKey !== receivedKey ?
             <h1>Sorry but you are not the creator. Therefore you cannot edit this project</h1>
         : 

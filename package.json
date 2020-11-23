@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@fluentui/react": "^7.138.0",
+    "@material-ui/core": "^4.11.0",
     "faunadb": "^3.0.1",
     "localforage": "^1.9.0",
     "next": "9.5.2",

@@ -240,6 +240,7 @@
     cursor: pointer;
     vertical-align: middle;
     text-align: center;
+    padding-bottom: 15px;
 }
 
 .button {

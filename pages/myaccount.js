@@ -8,6 +8,7 @@ import * as localForage from "localforage"
 import Advpreview from './components/advpreview'
 import Offlinepreview from './components/offlinepreview'
 import styles from './css/account.module.css'
+import { LinearProgress } from '@material-ui/core'
 
 export default function Myaccount(){
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
@@ -187,6 +188,8 @@ export default function Myaccount(){
                             delete={deleteProject}
                         />
                 )}
+
+                { projectsArray.length === 0 && offlineArray.length === 0 && <LinearProgress />}
             </>
         :
             <h1>sorry but no hackers are allowed to change another user's data</h1>

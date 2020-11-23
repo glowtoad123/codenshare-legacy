@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
 import faunadb, { query as q } from "faunadb"
 import styles from "./css/edit.module.css"
 import Navbar from "./navbar"
 import Link from 'next/link'
 import * as localForage from "localforage"
+import { LinearProgress } from '@material-ui/core'
 
 export default function New(){
     var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
@@ -22,6 +23,7 @@ export default function New(){
     const [changeLog, setChangeLog] = useState([])
     const [version, setVersion] = useState("")
     const [versionButtonStatus, setVersionButtonStatus] = useState(false)
+    const [onlineCheck, setOnlineCheck] = useState(false)
 
     function settingData(event){
         const name = event.target.name
@@ -120,9 +122,15 @@ export default function New(){
         })
     }
 
+    useEffect(() => {
+        const online = window.navigator.onLine
+        online ? setOnlineCheck(true) : setOnlineCheck(false)
+    })
+
     return (
         <>
             <Navbar />
+            {!onlineCheck ? <LinearProgress /> :
             <div id={styles.npform}>
                 <input 
                     className={styles.newProjectItem} 
@@ -274,7 +282,7 @@ export default function New(){
                             id={styles.submit} 
                             type="submit"
                 >Save</button>
-            </div>
+            </div>}
         </>
     )
 }

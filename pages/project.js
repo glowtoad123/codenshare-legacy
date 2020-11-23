@@ -5,6 +5,7 @@ import Navbar from './navbar'
 import Link from 'next/link'
 import styles from './css/project.module.css'
 import * as localForage from "localforage"
+import { LinearProgress } from '@material-ui/core'
 
 export default function Project() {
     const serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
@@ -77,6 +78,7 @@ export default function Project() {
     return(
         <>
             <Navbar />
+        {receivedKey === "" && <LinearProgress />}
             <div className={styles.userDisplay}>
                 <h1 className={styles.displaytitle}>
                     <strong>{projectData.Project_Title}</strong>
@@ -145,6 +147,11 @@ export default function Project() {
                             )}</div></div>)})}
                         </div>}
             </div>
+            {projectData === {} && 
+                <div>
+                    <h1>Either it's loading or you are not connected to the internet</h1>
+                </div>
+            }
         </>
     )
 }

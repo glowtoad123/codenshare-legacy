@@ -4,6 +4,7 @@ import * as localForage from "localforage"
 import Preview from './components/preview'
 import Offlinepreview from './components/offlinepreview'
 import Navbar from './navbar'
+import { LinearProgress } from '@material-ui/core'
 
 export default function Home(){
     const [projectArray, setProjectArray] =  useState([])
@@ -40,6 +41,7 @@ export default function Home(){
     return(
         <>
             <Navbar />
+            {projectArray.length === 0 && offlineArray.length === 0 && <LinearProgress />}
             {networkStatus ? projectArray.map(
                 (project, index) => <Preview 
                     id={idArray[index]}
