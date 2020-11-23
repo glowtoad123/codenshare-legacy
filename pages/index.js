@@ -41,7 +41,7 @@ export default function Home(){
     return(
         <>
             <Navbar />
-            {projectArray.length === 0 && offlineArray.length === 0 && <LinearProgress />}
+            {projectArray && offlineArray && projectArray.length === 0 && offlineArray.length === 0 && <LinearProgress />}
             {networkStatus ? projectArray.map(
                 (project, index) => <Preview 
                     id={idArray[index]}
