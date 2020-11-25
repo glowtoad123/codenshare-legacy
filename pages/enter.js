@@ -11,7 +11,7 @@ export default function Enter(){
     const hash = crypto.createHash('sha256')
     const [account, setAccount] = useState({})
     
-    var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
+    var serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
 
     const router = useRouter()
     

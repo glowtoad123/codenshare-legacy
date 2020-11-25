@@ -12,7 +12,9 @@ export default function Home(){
     const [idArray, setIdArray] = useState([])
     const [networkStatus, setNetworkStatus] = useState(false)
     
-    var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
+    var serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
+
+    console.log("key: " + process.env.NEXT_FAUNA_KEY)
 
     !networkStatus && serverClient.query(
         q.Map(

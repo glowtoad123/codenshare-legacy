@@ -9,7 +9,7 @@ import { LinearProgress } from '@material-ui/core'
 
 export default function Update(){
 
-    const serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
+    const serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
 
     const [yourKey, setYourKey] = useState("")
     const [receivedKey, setReceivedKey] = useState("")

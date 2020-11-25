@@ -9,7 +9,7 @@ import styles from './css/account.module.css'
 import { LinearProgress } from '@material-ui/core'
 
 export default function Account(){
-    var serverClient = new faunadb.Client({ secret: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe' });
+    var serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
 
     const [projectsArray, setProjectsArray] = useState([])
     const [projectsIdArray, setProjectsIdArray] = useState([])
