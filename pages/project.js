@@ -7,8 +7,7 @@ import styles from './css/project.module.css'
 import * as localForage from "localforage"
 import { LinearProgress } from '@material-ui/core'
 
-export default function Project() {
-    const serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
+export default function Project({id}) {
     
     const [yourKey, setYourKey] = useState("")
     const [receivedKey, setReceivedKey] = useState("")
@@ -19,60 +18,69 @@ export default function Project() {
     const [update, setUpdate] = useState([])
     const [creator, setCreator] = useState("")
     const [deleteStatus, setDeleteStatus] = useState(false)
-    
+
     const router = useRouter()
-    const projectId = router.query.title
 
-    yourKey === "" && localForage.getItem("yourKey").then(ret => {
-            
-                setYourKey(ret)
-                console.log(ret)
+    async function getProject(){
+        const res = await fetch("api/getSingleProject", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({id: id})
         })
+        let data = await res.json()
 
-    console.log(projectData)
-
-    creator === ""  && serverClient.query(
-        q.Get(
-            q.Ref(q.Collection("Projects"), projectId)
-        )
-    ).then(ret => {
-        setProjectData(ret.data);
-        setCreator(ret.data.Creator);
-        setLinkList(ret.data.Links);
-        setRoadmap(ret.data.Roadmap);
-        setCategories(ret.data.Categories);
-        setUpdate(ret.data.Update)
-    })
-
-    creator.length !== 0 && receivedKey.length === 0 && serverClient.query(
-        q.Get(
-            q.Match(q.Index("dublicateUsername"), creator)
-        )
-    ).then(ret => {
-        setReceivedKey(ret.data.password);
-        console.log(ret.data.password)
-    })
-
-    function deleteProject(event){
-        var confirmDeletion = confirm("Are you sure you want to delete that project?");
-            if (confirmDeletion == true) {
-                !deleteStatus && serverClient.query(
-                    q.Delete(
-                        q.Ref(q.Collection("Projects"), projectId)
-                    )
-                ).then(ret => {
-                    console.log(ret);
-                    setDeleteStatus(true);
-                    router.push("/")
-                })
-            }
+        console.log(data)
+        setProjectData(data)
+        setLinkList(data.Links)
+        setRoadmap(data.Roadmap)
+        setCategories(data.Categories)
+        setUpdate(data.Update)
+        setCreator(data.Creator)
     }
 
+    async function checkUser(){
+        const res = await fetch('api/checkUser', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({username: creator}
+            )
+        })
+
+        let data = await res.json()
+        console.log("userData", data.password)
+        console.log("yourkey:", yourKey)
+        setReceivedKey(data.password)
+    }
+
+    async function settingYourKey(){
+        let theKey = await localForage.getItem("yourKey").then(key => key)
+        setYourKey(theKey)
+    }
+
+    useEffect(() => {
+        console.log(id)
+        getProject()
+        settingYourKey()
+    }, [])
+    
+    creator && creator.length !== 0 && checkUser()
+    creator && creator.length !== 0 && console.log("creator: ", creator)
     const changeLog = update.map(change => change.Changes)
 
     function settingSelection(){
         localForage.setItem("Selection", "categories")
         localForage.setItem("foundStatus", true)
+    }
+
+    async function deleteProject() {
+        const res = await fetch("api/deleteProject", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({id: id})
+        })
+        let data = await res.json()
+        console.log(data)
+        router.push("/")
     }
 
     return(
@@ -83,8 +91,8 @@ export default function Project() {
                 <h1 className={styles.displaytitle}>
                     <strong>{projectData.Project_Title}</strong>
                 </h1>
-                {yourKey === receivedKey && <div>
-                    <Link href={`/update?title=${projectId}`}><a>
+                {yourKey === receivedKey && projectData && <div>
+                    <Link href={`/update?title=${id}`}><a>
                         <img 
                             id={projectData.Id}
                             title={projectData.description} 
@@ -154,4 +162,11 @@ export default function Project() {
             }
         </>
     )
+}
+
+
+export async function getServerSideProps(context){
+    return {props: {
+        id: context.query.title
+    }}
 }

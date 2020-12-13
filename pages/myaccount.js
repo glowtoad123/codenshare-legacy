@@ -197,3 +197,9 @@ export default function Myaccount(){
         </>
     )
 }
+
+export async function getServerSideProps(context){
+    return {props: {
+        id: context.query.title
+    }}
+}
