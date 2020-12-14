@@ -7,7 +7,7 @@ import styles from './css/edit.module.css'
 import * as localForage from "localforage"
 import { LinearProgress } from '@material-ui/core'
 
-export default function Update(){
+export default function Update({projectId}){
 
     const serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
 
@@ -28,35 +28,38 @@ export default function Update(){
     const [versionButtonStatus, setVersionButtonStatus] = useState(false)
 
     const router = useRouter()
-    const projectId = router.query.title
 
-    yourKey.length == 0 && localForage.getItem("yourKey").then(ret => {
-            
-        setYourKey(ret)
-        console.log(ret)
-    })
+    async function getInfo(){
+        let savedUsername = await localForage.getItem("userName").then(cred => cred)
+        let savedKey = await localForage.getItem("yourKey").then(cred => cred)
+        setYourKey(savedKey)
+        let res = await fetch('api/getSingleProject', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({id: projectId})
+        })
+        let data = await res.json()
+        setProjectData(data)
+        setCreator(data.Creator)
+        setCategories(data.Categories)
+        setLinkList(data.Links)
+        setRoadmap(data.Roadmap)
+        setUpdateList(data.Update)
 
-    creator.length === 0 && serverClient.query(
-        q.Get(
-            q.Ref(q.Collection("Projects"), projectId)
-        )
-    ).then(ret => {
-        setProjectData(ret.data);
-        setCreator(ret.data.Creator);
-        setLinkList(ret.data.Links);
-        setRoadmap(ret.data.Roadmap);
-        setCategories(ret.data.Categories);
-        setUpdateList(ret.data.Update)
-    })
+        console.log('changeLog: ', data.Changes)
 
-    creator.length !== 0 && receivedKey.length === 0 && serverClient.query(
-        q.Get(
-            q.Match(q.Index("dublicateUsername"), creator)
-        )
-    ).then(ret => {
-        setReceivedKey(ret.data.password);
-        console.log(ret.data.password)
-    })
+        let userRes = await fetch('api/checkUser', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({username: data.Creator})
+        })
+        let userData = await userRes.json()
+        setReceivedKey(userData.password)
+    }
+
+    useEffect(() => {
+        getInfo()
+    }, [])
 
     function settingData(event){
         const name = event.target.name
@@ -139,7 +142,7 @@ export default function Update(){
         setVersionButtonStatus(true)
     }
 
-    function addData(event){
+    async function addData(event){
         projectData.Categories = categories
         projectData.Roadmap = roadmap
         projectData.Links = linkList
@@ -149,19 +152,24 @@ export default function Update(){
         })
         projectData.Update = updateList
         projectData.Creator = creator;
-        serverClient.query(
-            q.Update(
-                q.Ref(q.Collection("Projects"), projectId),
-                    {data: projectData}
-            )
-        ).then(ret => {
-            console.log(ret.data);
-            router.push(`/project?title=${projectId}`)
+        
+        let res = await fetch('api/updateSingleProject', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                id: projectId,
+                projectData: projectData
+            })
         })
+        let data = await res.json()
+        console.log("updated Project: ", data)
+        router.push(`/project?title=${projectId}`)
     }
 
-    const versionList = updateList.map(update => update.Version)
-    const fullChangeLog = updateList.map(update => update.Changes)
+    var versionList 
+    updateList ? versionList = updateList.map(update => update.Version) : versionList = []
+    var fullChangeLog 
+    updateList ? fullChangeLog = updateList.map(update => update.Changes) : fullChangeLog = []
 
     return(
         <>
@@ -344,4 +352,10 @@ export default function Update(){
         </>
 
     )
+}
+
+export async function getServerSideProps(context){
+    return {props: {
+        projectId: context.query.title
+    }}
 }
