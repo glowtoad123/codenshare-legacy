@@ -25,68 +25,62 @@ export default function Myaccount(){
     const [offlineArray, setOfflineArray] = useState([])
     const [deleteStatus, setDeleteStatus] = useState(false)
 
-    localForage.getItem("userName").then(ret => {
-        setUserName(ret)
-    })
-    
-    localForage.getItem("yourKey").then(ret => {
-        setYourKey(ret)
-    })
 
-    localForage.getItem("userId").then(ret => {
-        setUserId(ret)
-    })
+    async function retreivingSavedCredentials(){
+        var savedUsername = await localForage.getItem("userName").then(cred => cred)
+        var savedKey = await localForage.getItem("yourKey").then(cred => cred)
+        var savedId = await localForage.getItem("userId").then(cred => cred)
 
-    projectsArray.length === 0 && serverClient.query(
-        q.Map(
-            q.Paginate(
-                q.Match(q.Index("creatorsworks"), userName)
-            ),
-            q.Lambda("Project", q.Get(q.Var('Project')))
-        )
-    ).then((ret, index) => {
-        setProjectsArray(ret.data.map(project => project.data));
-        setProjectsIdArray(ret.data.map(project => project.ref.id));
-        localForage.setItem("userProjectList", ret.data.map(project => project.data)).then(ret => {
-            setNetworkStatus(true);
-        });
-    })
+        console.log("savedUsername: ", savedUsername)
+        console.log("savedKey: ", savedKey)
+        console.log("savedId: ", savedId)
 
-    receivedKey.length === 0 && serverClient.query(
-        q.Get(
-            q.Ref(q.Collection("Accounts"), userId)
-        )
-    ).then(ret => {setReceivedKey(ret.data.password); console.log(ret.data.password)})
+        setUserName(savedUsername)
+        setYourKey(savedKey)
+        setUserId(savedId)
 
-    function deleteProject(event){
+        const res = await fetch("api/getYourProjects", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({creator: savedUsername})
+        })
+        let data = await res.json()
+        setProjectsArray(data)
+        setNetworkStatus(true)
+
+        let offlineData = await localForage.setItem("userProjectList", data)
+
+        const userRes = await fetch('api/checkUser', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({username: savedUsername}
+            )
+        })
+
+        let userData = await userRes.json()
+        setReceivedKey(userData.password)
+    }
+
+    useEffect(() => {
+        retreivingSavedCredentials()
+    }, [])
+
+    async function deleteProject(event){
         var confirmDeletion = confirm("Are you sure you want to delete that project?");
             if (confirmDeletion == true) {
-                !deleteStatus && serverClient.query(
-                    q.Delete(
-                        q.Ref(q.Collection("Projects"), event.target.id)
-                    )
-                ).then(ret => {
-                    console.log(ret);
-                    setDeleteStatus(true)
+                const res = await fetch("api/deleteProject", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({id: event.target.id})
                 })
+                let data = await res.json()
+                retreivingSavedCredentials()
+                console.log("deletedProject: ", data)
                 alert("This project has been deleted")
             }
     }
 
-    deleteStatus && serverClient.query(
-        q.Map(
-            q.Paginate(
-                q.Match(q.Index("creatorsworks"), userName)
-            ),
-            q.Lambda("Project", q.Get(q.Var('Project')))
-        )
-    ).then((ret, index) => {
-        setProjectsArray(ret.data.map(project => project.data));
-        setProjectsIdArray(ret.data.map(project => project.ref.id));
-        setDeleteStatus(false)
-    })
-
-    function updateName(event){
+    async function updateName(event){
 
         var changeuserName = prompt("please update your username")
 
@@ -98,42 +92,36 @@ export default function Myaccount(){
                 hash.update(hashedPassword)
                 const alphaPassword = hash.digest("hex")
                 console.log("alphaPassword: " + alphaPassword)
-                crypto.pbkdf2(alphaPassword, 'salt', 10, 64, 'sha512', (err, derivedKey) => {
+                crypto.pbkdf2(alphaPassword, 'salt', 10, 64, 'sha512', async (err, derivedKey) => {
                     if (err) throw err;
-                    serverClient.query(
-                        q.Get(
-                          q.Match(q.Index('dublicateUsername'), changeuserName)
+                    let userRes = await fetch("api/updateAccount", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({
+                            id: userId,
+                            changedUsername: changeuserName,
+                            changedPassword: derivedKey.toString('hex')
+                        })
+                    })
+                    let userData = await userRes.json()
+                    console.log("newUserData: ", userData)
+                    await localForage.setItem("userName", userData.data.username)
+                    await localForage.setItem("yourKey", userData.data.password)
+                    await localForage.setItem("userId", userData.ref['@ref'].id)
+                    projectsArray.map(async (project) => {
+                            let res = await fetch("api/updateProjects", {
+                                method: "POST",
+                                headers: {"Content-Type": "application/json"},
+                                body: JSON.stringify({
+                                    id: project.ref['@ref'].id,
+                                    changedUsername: changeuserName
+                                })
+                            })
+                            let data = await res.json()
+                            console.log("updated Projects: ", data)
+                        }
                         )
-                      )
-                      .then((ret) => {console.log(ret.data.username); alert("Sorry, but this username has alread been taken")}, (err) => {
-                        serverClient.query(
-                            q.Update(
-                              q.Ref(q.Collection("Accounts"), userId),
-                              { data: {
-                                  username: changeuserName,
-                                  password: derivedKey.toString('hex')
-                                }},
-                            )
-                          )
-                          .then((ret) => {
-                              console.log(ret); 
-                              localForage.setItem("userName", changeuserName);
-                              localForage.setItem("yourKey", ret.data.password);
-                              localForage.setItem("userId", ret.ref.id)
-                            });
-                    
-                        projectsIdArray.map(id => {serverClient.query(
-                          q.Update(
-                            q.Ref(q.Collection('Projects'), id),
-                            { data: {Creator: changeuserName}},
-                          )
-                        )
-                        .then((ret) => {
-                            console.log(ret);
-                            router.reload()
-                        })})
-                      })
-
+                    retreivingSavedCredentials()
                 })
             } else {
                 alert("username not changed")
@@ -144,11 +132,10 @@ export default function Myaccount(){
     }
     
 
-    offlineArray && offlineArray.length === 0 &&
-            localForage.getItem("userProjectList").then(ret => {
-                setOfflineArray(ret)
-            })
-
+    if(!networkStatus && offlineArray && offlineArray.length === 0) async () =>{
+            let offlineData = await localForage.getItem("userProjectList").then(ret => ret)
+            setOfflineArray(offlineData)
+    }
     console.log(offlineArray)
     console.log("networkStatus: " + networkStatus)
 
@@ -164,11 +151,11 @@ export default function Myaccount(){
                 </div>
                 {projectsArray.map((project, index) =>
                         <Advpreview 
-                            id={projectsIdArray[index]}
-                            project={project.Project_Title}
-                            description={project.Description}
-                            creator={project.Creator}
-                            categories={project.Categories}
+                            id={project.ref['@ref'].id}
+                            project={project.data.Project_Title}
+                            description={project.data.Description}
+                            creator={project.data.Creator}
+                            categories={project.data.Categories}
                             delete={deleteProject}
                         />
                 )}
@@ -180,11 +167,11 @@ export default function Myaccount(){
                 </div>
                 {offlineArray && offlineArray.map((project, index) =>
                         <Offlinepreview 
-                            id={projectsIdArray[index]}
-                            project={project.Project_Title}
-                            description={project.Description}
-                            creator={project.Creator}
-                            categories={project.Categories}
+                            id={project.ref['@ref'].id}
+                            project={project.data.Project_Title}
+                            description={project.data.Description}
+                            creator={project.data.Creator}
+                            categories={project.data.Categories}
                             delete={deleteProject}
                         />
                 )}
@@ -196,10 +183,4 @@ export default function Myaccount(){
         }
         </>
     )
-}
-
-export async function getServerSideProps(context){
-    return {props: {
-        id: context.query.title
-    }}
 }

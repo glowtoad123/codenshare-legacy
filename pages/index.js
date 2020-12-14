@@ -29,7 +29,7 @@ export default function Home(){
         getProjects()
     }, [])
 
-    if(!networkStatus && projectArray && projectArray.length === []) async () => {
+    if(!networkStatus && projectArray && projectArray === []) async () => {
         var data = await localForage.getItem("projectList").then(project => project)
         setOfflineArray(data)
     }
