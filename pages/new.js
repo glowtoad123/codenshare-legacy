@@ -100,7 +100,7 @@ export default function New(){
         setVersionButtonStatus(true)
     }
 
-    function addData(event){
+    async function addData(event){
         projectData.Categories = categories
         projectData.Roadmap = roadmap
         projectData.Links = linkList
@@ -108,18 +108,18 @@ export default function New(){
             Version: version,
             Changes: changeLog
         }]
-        localForage.getItem("userName").then(ret => {
+        await localForage.getItem("userName").then(async (ret) => {
             projectData.Creator = ret;
-            serverClient.query(
-                q.Create(
-                    q.Collection("Projects"),
-                    {data: projectData}
-                )
-            ).then(ret => {
-                console.log(ret.data);
-                router.push("/")
+            const res = await fetch("/api/createProject", {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({projectData: projectData})
             })
+            let data = await res.json()
+            console.log("newProject: ", data)
+            router.push("/")
         })
+
     }
 
     useEffect(() => {
