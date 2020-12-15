@@ -1,13 +1,13 @@
 .display {
   display: inline-block;
-  background-color: #cad2c5;
+  background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border: none;
   border-radius: 12px;
-  margin: 20px;
+  margin-left: 60px;
   margin-top: 80px;
   z-index: 0;
-  width: 300px;
+  width: 25%;
 }
 
 .display:hover {
@@ -29,8 +29,9 @@
 }
 
 .descriptionDiv {
-  background-color: #e1e9e6;
-  width: inherit;
+  background-color:white;
+  width: -webkit-fill-available;
+  width: -moz-available;
   height: 200px;
   overflow-y: hidden;
   display: flex;
@@ -39,7 +40,6 @@
 }
 
 .descriptionDiv:hover {
-  background-color: #e1e9e6;
   height: 200px;
   overflow-y: scroll;
   display: flex;
@@ -102,4 +102,10 @@
   height: 36px;
   cursor: pointer;
   vertical-align: middle;
+}
+
+@media screen and (max-width: 1024px) {
+  .display {
+    width: 90%
+  }
 }

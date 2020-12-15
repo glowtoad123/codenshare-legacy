@@ -143,6 +143,21 @@ option {
   border-radius: 0 6px 6px 0;
 }
 
+svg {
+  color: #354f52;
+  width: 32px;
+  height: 32px;
+  margin: 15px;
+}
+
+svg:hover {
+  color: #2a3e41;
+}
+
+svg:active {
+  color:  #1e2c2e
+}
+
 ::placeholder {
   color: #2f4f4f;
   text-align: left;
