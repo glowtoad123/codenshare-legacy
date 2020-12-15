@@ -83,8 +83,9 @@
     z-index: 0;
     background-color: #2f3e46;
     color: white;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 6px;
+    padding: 10px
 }
 
 .save {
@@ -102,30 +103,77 @@
     align-items: center;
 }
 
+.control {
+    margin: auto;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    flex-direction: row;
+    background-color: #2F3E46;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 5px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    left: 25%;
+    right: 25%;
+    bottom: 0;
+}
+
+#svg {
+    color: white
+}
+
 .delete {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     vertical-align: middle;
     cursor: pointer;
-    
+    margin: 10px
 }
 
 .edit {
-                width: 36px; 
-                height: 36px;
-                cursor: pointer;
-                vertical-align: middle;
+        width: 32px; 
+        height: 32px;
+        vertical-align: middle;
+        cursor: pointer;
+        margin: 10px;
 }
 
-/* .description {
-    background-color: #ffffff;
-} */
+.description {
+    text-align: center;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 80%;
+    background-color: black;
+    margin: auto;
+    font-size: larger;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    color: #E1E9E6;
+}
 
 .textHead {
-    background-color: #b3c1b1;
-    display: inline-block;
+    background-color: black;
+    display: flex;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 0 6px 6px 0;
+    border-radius: 6px;
+    color: #E1E9E6;
+    margin: auto;
+    text-align: center;
+    width: max-content;
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
 }
 
 .display {
@@ -141,36 +189,41 @@
 }
 
 .userDisplay {
-    background-color: #cad2c5;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);    
+    background-color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border: none;
     border-radius: 12px;
-    /*margin: 20px;
-    margin-top: 80px;*/
     width: 90%;
     margin: auto;
     margin-top: 80px;
     z-index: 0;
+    -webkit-align-items: center;
+    -moz-box-align: center;
     align-items: center;
+    margin-bottom: 80px;
 }
 
 .text {
     background-color: #ffffff;
 }
 
-.respository{
-    width: -webkit-fill-available;
-    width: -moz-available;
-    background-color: #2f3e46;
-    box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),;
+.repository{
+    width: max-content;
+    background-color:#2f3e46;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     color: white;
     z-index: 0;
-    border-radius: 0 6px 6px 0;
+    border-radius: 6px;
     cursor: pointer;
     vertical-align: middle;
-    display: inline-block;
+    padding: 12px;
+    display: flex;
     font-weight: bold;
+    margin: auto;
     margin-bottom: 20px;
+    text-align: center;
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
 }
 
 .tags {
@@ -199,16 +252,22 @@
 }
 
 .change {
-    width: 250px;
     display: inline-block;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
     flex-direction: row;
-    background-color: #84a98c;
-    color: black;
+    background-color: #2f3e46;
+    color: white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin: 12px;
     border: none;
     border-radius: 6px;
-    margin: auto;
-    margin-bottom: 10px;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    cursor: pointer;
+    padding: 10px;
 }
 
 .userDisplayTags {
@@ -241,6 +300,7 @@
     vertical-align: middle;
     text-align: center;
     padding-bottom: 15px;
+    font-size: xxx-large;
 }
 
 .button {
@@ -310,22 +370,26 @@
 }
 
 .update {
-background-color: #b3c1b1;
-margin: 10px;
-padding: 10px;
-padding-left: 0;
-border: none;
-border-radius: 10px;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-width: 300px;
+    background-color: #E1E9E6;
+    margin: 10px;
+    padding: 10px;
+    padding-left: 0;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 300px;
 }
 
 .changelogLabel {
-background-color: #96a194;
-display: inline-block;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border-radius: 0 6px 6px 0;
-font-size: 20px;
+    background-color: black;
+    display: flex;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 6px 6px 0;
+    color: #E1E9E6;
+    text-align: center;
+    width: max-content;
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
 }
 
 .inquisite {
@@ -341,4 +405,10 @@ font-size: 20px;
 .withininquisite {
     margin: 10px;
     font-weight: bold;
+}
+
+@media screen and (max-width: 1024px) {
+    .repository {
+        font-size: x-small;
+    }
 }
