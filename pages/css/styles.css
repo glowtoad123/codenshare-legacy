@@ -158,6 +158,10 @@ svg:active {
   color:  #1e2c2e
 }
 
+.editor {
+  margin-bottom: 40px
+}
+
 ::placeholder {
   color: #2f4f4f;
   text-align: left;

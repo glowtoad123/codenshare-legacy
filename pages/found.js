@@ -7,7 +7,7 @@ import Navbar from './navbar'
 import styles from './css/project.module.css'
 import { LinearProgress } from '@material-ui/core'
 
-export default function found(){
+export default function found({searchedInfo}){
     var serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
     const [projectArray, setProjectArray] = useState([])
     const [wholeProjects, setWholeProjects] = useState({})
@@ -17,26 +17,28 @@ export default function found(){
     const [foundStatus, setFoundStatus] = useState(false)
 
     const router = useRouter()
-    const searchedInfo = router.query.title
+
+    async function gettingData(){
+        let savedFoundStatus = await localForage.getItem("foundStatus").then(status => status)
     
-    localForage.getItem("foundStatus").then(ret =>
-        setFoundStatus(ret)
-    )
+        savedFoundStatus && localForage.setItem("foundStatus", false).then(
+            router.reload()
+        )
 
-    foundStatus && localForage.setItem("foundStatus", false).then(
-        router.reload()
-    )
 
-    localForage.getItem("Selection").then(ret => setSelection(ret))
+        let savedSelection = await localForage.getItem("Selection").then(type => type)
+        setSelection(savedSelection)
 
-    queriedList.length === 0 && serverClient.query(
-        q.Map(
-            q.Paginate(q.Match(q.Index("projects"))),
-            q.Lambda("X", q.Get(q.Var("X")))
-          )
-    ).then(ret => {
-        if(selection === "title"){
-            const results = ret.data.filter(projects => {
+        const res = await fetch("api/getProjects", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+        })
+
+        let data = await res.json()
+
+        
+        if(savedSelection === "title"){
+            const results = data.filter(projects => {
                 return projects.data.Project_Title.includes(searchedInfo)
             })
 
@@ -47,8 +49,8 @@ export default function found(){
             }
         }
 
-        if(selection === "description"){
-            const results = ret.data.filter(projects => {
+        if(savedSelection === "description"){
+            const results = data.filter(projects => {
                 return projects.data.Description.includes(searchedInfo)
             })
 
@@ -57,10 +59,10 @@ export default function found(){
             }
         }
 
-        if(selection === "categories"){
+        if(savedSelection === "categories"){
             const searchCategoriesList = searchedInfo.split(" ")
             const searchResults = searchCategoriesList.map(one => 
-                ret.data.filter(projects => 
+                data.filter(projects => 
                     projects.data.Categories.includes(one)
                 )
             )
@@ -72,7 +74,11 @@ export default function found(){
                 console.log(finalResults)
             }
         }
-    })
+    }
+
+    useEffect(() => {
+        gettingData()
+    }, [])
 
     return(
         <>
@@ -82,7 +88,7 @@ export default function found(){
         {queriedList && queriedList.length === 0 && <LinearProgress />}
         {queriedList.map(project => 
             <Preview
-                id={project.ref.id}
+                id={project.ref['@ref'].id}
                 project={project.data.Project_Title}
                 description={project.data.Description}
                 creator={project.data.Creator}
@@ -91,4 +97,10 @@ export default function found(){
         )}
         </>
     )
+}
+
+export async function getServerSideProps(context){
+    return {props: {
+        searchedInfo: context.query.title
+    }}
 }

@@ -122,12 +122,14 @@ export default function Project({id}) {
                     </a>
                 ) }
                 <br />
-                <h1 className={styles.textHead}><strong>Roadmap</strong></h1>
-                <br />
-                {roadmap.length > 0 && roadmap.map(each => <p className={styles.goal}><strong>{each}</strong></p>)}
-                <br />
-                <br />
-                <br />
+                {roadmap && roadmap.length > 0 && <div>
+                    <h1 className={styles.textHead}><strong>Roadmap</strong></h1>
+                    <br />
+                    {roadmap.map(each => <p className={styles.goal}><strong>{each}</strong></p>)}
+                    <br />
+                    <br />
+                    <br />
+                </div>}
                 <h1 className={styles.textHead}><strong>Categories</strong></h1>
                 <br />
                 {Categories.length > 0 && Categories.map(category => 

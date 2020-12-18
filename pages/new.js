@@ -6,6 +6,11 @@ import Navbar from "./navbar"
 import Link from 'next/link'
 import * as localForage from "localforage"
 import { LinearProgress } from '@material-ui/core'
+import 'codemirror/mode/xml/xml'
+import 'codemirror/mode/javascript/javascript'
+import 'codemirror/mode/css/css'
+import 'codemirror/mode/markdown/markdown'
+import {Controlled as CodeMirror} from 'react-codemirror2'
 
 export default function New(){
     var serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
@@ -13,6 +18,7 @@ export default function New(){
     const router = useRouter()
 
     const [projectData, setProjectData] = useState({})
+    const [devLog, setDevLog] = useState("")
     const [category, setCategory] = useState("")
     const [categories, setCategories] = useState([])
     const [link, setLink] = useState("")
@@ -108,6 +114,7 @@ export default function New(){
             Version: version,
             Changes: changeLog
         }]
+        projectData.Devlog = devLog
         await localForage.getItem("userName").then(async (ret) => {
             projectData.Creator = ret;
             const res = await fetch("/api/createProject", {
@@ -147,6 +154,22 @@ export default function New(){
                     value={projectData.Description}     
                     placeholder=" Description"     
                     id={styles.Description}      
+                />
+                <CodeMirror
+                    onBeforeChange={(editor, data, value) => {
+                        setDevLog(value)
+                    }}
+                    className="editor"
+                    value={devLog}
+                    name= "Devlog"
+                    options={{
+                      theme: 'mdn-like',
+                      lineNumbers: true,
+                      mode: 'markdown'
+                    }}
+                    onChange={(editor, data, value) => {
+                        setDevLog(value)
+                    }}
                 />
                 <input 
                     className={styles.newProjectItem} 
