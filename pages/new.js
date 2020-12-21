@@ -6,14 +6,21 @@ import Navbar from "./navbar"
 import Link from 'next/link'
 import * as localForage from "localforage"
 import { LinearProgress } from '@material-ui/core'
-import 'codemirror/mode/xml/xml'
-import 'codemirror/mode/javascript/javascript'
-import 'codemirror/mode/css/css'
-import 'codemirror/mode/markdown/markdown'
-import {Controlled as CodeMirror} from 'react-codemirror2'
+import dynamic from 'next/dynamic'
 
 export default function New(){
     var serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
+
+    const CodeMirror = dynamic(() => {  
+            import('codemirror/mode/javascript/javascript')
+            import('codemirror/mode/xml/xml')
+            import('codemirror/mode/css/css')
+            import('codemirror/mode/markdown/markdown')
+
+            return import('react-codemirror')
+        },
+            { ssr: false }
+    );
 
     const router = useRouter()
 
@@ -155,10 +162,7 @@ export default function New(){
                     placeholder=" Description"     
                     id={styles.Description}      
                 />
-                <CodeMirror
-                    onBeforeChange={(editor, data, value) => {
-                        setDevLog(value)
-                    }}
+                {CodeMirror && <CodeMirror
                     className="editor"
                     value={devLog}
                     name= "Devlog"
@@ -167,10 +171,10 @@ export default function New(){
                       lineNumbers: true,
                       mode: 'markdown'
                     }}
-                    onChange={(editor, data, value) => {
-                        setDevLog(value)
+                    onChange={devLog => {
+                        setDevLog(devLog)
                     }}
-                />
+                />}
                 <input 
                     className={styles.newProjectItem} 
                     onChange={settingData} 

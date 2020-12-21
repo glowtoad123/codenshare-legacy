@@ -10,12 +10,21 @@
   "dependencies": {
     "@fluentui/react": "^7.138.0",
     "@material-ui/core": "^4.11.0",
+    "@mdx-js/loader": "^1.6.22",
+    "@next/mdx": "^10.0.3",
     "codemirror": "^5.58.3",
     "faunadb": "^3.0.1",
+    "highlight.js": "^10.4.1",
     "localforage": "^1.9.0",
+    "markdown-it": "^12.0.4",
+    "marked": "^1.2.7",
     "next": "9.5.2",
     "next-pwa": "^3.1.4",
+    "prismjs": "^1.22.0",
+    "pygmentize-bundled": "^2.3.0",
+    "pygments": "^0.2.1",
     "react": "16.13.1",
+    "react-codemirror": "^1.0.0",
     "react-codemirror2": "^7.2.1",
     "react-dom": "16.13.1"
   }

@@ -6,9 +6,15 @@ import Link from 'next/link'
 import styles from './css/project.module.css'
 import * as localForage from "localforage"
 import { LinearProgress } from '@material-ui/core'
+import dynamic from 'next/dynamic'
+import marked from 'marked';
+import hljs from 'highlight.js'
+import 'markdown-it'
+import MarkdownIt from 'markdown-it'
+import javascript from 'highlight.js/lib/languages/javascript'
 
 export default function Project({id}) {
-    
+
     const [yourKey, setYourKey] = useState("")
     const [receivedKey, setReceivedKey] = useState("")
     const [projectData, setProjectData] = useState({})
@@ -20,6 +26,28 @@ export default function Project({id}) {
     const [deleteStatus, setDeleteStatus] = useState(false)
 
     const router = useRouter()
+
+    hljs.g
+
+    MarkdownIt
+
+    hljs.registerLanguage('javascript', require('highlight.js/lib/languages/javascript'));
+
+    const md = new MarkdownIt({
+        highlight: function (str, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              return '<pre class="hljs"><code>' +
+                     hljs.highlight(lang, str, true).value +
+                     '</code></pre>';
+            } catch (__) {}
+          }
+      
+          return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+        }
+      });
+
+    hljs.registerLanguage('javascript', require('highlight.js/lib/languages/javascript'));
 
     async function getProject(){
         const res = await fetch("api/getSingleProject", {
@@ -56,11 +84,16 @@ export default function Project({id}) {
         let theKey = await localForage.getItem("yourKey").then(key => key)
         setYourKey(theKey)
     }
-
+    
     useEffect(() => {
         console.log(id)
         getProject()
         settingYourKey()
+        dynamic(() => import('./components/prism'))
+        setTimeout(() => {
+
+            import('./components/prism')
+        }, 3000)
     }, [])
     
     creator && creator.length !== 0 && checkUser()
@@ -83,10 +116,19 @@ export default function Project({id}) {
         router.push("/")
     }
 
+    const [devlog, setDevlog] = useState(projectData.Devlog)
+
+/*     setDevlog(current =>
+        
+    ) */
+
+    
+
+
     return(
         <>
             <Navbar />
-        {receivedKey === "" && <LinearProgress />}
+        {receivedKey === "" && <><LinearProgress /><script src="./components/prism.js"></script></>}
             <div className={styles.userDisplay}>
                 <h1 className={styles.displaytitle}>
                     <strong>{projectData.Project_Title}</strong>
@@ -148,7 +190,11 @@ export default function Project({id}) {
                             <div className={styles.changeDiv}>{changeLog[index].map(one => 
                                 <p className={styles.change}><strong>{one}</strong></p>
                             )}</div></div>)})}
-                        </div>}
+                        </div>
+                }
+                {projectData.Devlog && <div>
+                    <div id={styles.devLog} dangerouslySetInnerHTML={{__html: md.render(projectData.Devlog, 'javascript')}}></div>
+                </div>}
             </div>
             {projectData === {} && 
                 <div>

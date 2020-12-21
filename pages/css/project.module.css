@@ -212,6 +212,39 @@
     margin-bottom: 80px;
 }
 
+#devLog {
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
+}
+
+#devLog>p>img {
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
+    width: 75%;
+    margin: auto;
+    display: flex;
+}
+
+#devLog>pre>code {
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
+    /* overflow-x: scroll; */
+    font-family: monospace;
+}
+
+#devLog>h1 {
+    background-color: black;
+    display: flex;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+    color: #E1E9E6;
+    margin: auto;
+    text-align: center;
+    width: max-content;
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
+}
+
 .text {
     background-color: #ffffff;
 }
