@@ -6,6 +6,15 @@ import Link from 'next/link'
 import styles from './css/edit.module.css'
 import * as localForage from "localforage"
 import { LinearProgress } from '@material-ui/core'
+import dynamic from 'next/dynamic'
+
+const CodeMirror = dynamic(() => {
+    import('codemirror/mode/xml/xml')
+    import('codemirror/mode/javascript/javascript')
+    import('codemirror/mode/css/css')
+    import('codemirror/mode/markdown/markdown')
+    return import('react-codemirror')
+}, {ssr: false})
 
 export default function Update({projectId}){
 
@@ -26,6 +35,7 @@ export default function Update({projectId}){
     const [updateList, setUpdateList] = useState([])
     const [version, setVersion] = useState("")
     const [versionButtonStatus, setVersionButtonStatus] = useState(false)
+    const [devLog, setDevLog] = useState('Create a devlog using markdown')
 
     const router = useRouter()
 
@@ -45,6 +55,7 @@ export default function Update({projectId}){
         setLinkList(data.Links)
         setRoadmap(data.Roadmap)
         setUpdateList(data.Update)
+        setDevLog(data.Devlog)
 
         console.log('changeLog: ', data.Changes)
 
@@ -152,6 +163,7 @@ export default function Update({projectId}){
         })
         projectData.Update = updateList
         projectData.Creator = creator;
+        projectData.Devlog = devLog;
         
         let res = await fetch('api/updateSingleProject', {
             method: "POST",
@@ -195,6 +207,17 @@ export default function Update({projectId}){
                         placeholder=" Description"     
                         id={styles.Description}      
                     />
+                    {<CodeMirror
+                        className="editor"
+                        value={devLog}
+                        name= "Devlog"
+                        options={{
+                          theme: 'mdn-like',
+                          lineNumbers: true,
+                          mode: 'markdown'
+                        }}
+                        onChange={devLog => setDevLog(devLog)}
+                    />}
                     <input 
                         className={styles.newProjectItem} 
                         onChange={settingData} 

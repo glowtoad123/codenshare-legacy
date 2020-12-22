@@ -18,6 +18,8 @@ export default function found({searchedInfo}){
 
     const router = useRouter()
 
+    
+
     async function gettingData(){
         let savedFoundStatus = await localForage.getItem("foundStatus").then(status => status)
     
@@ -79,6 +81,8 @@ export default function found({searchedInfo}){
     useEffect(() => {
         gettingData()
     }, [])
+
+    gettingData()
 
     return(
         <>
