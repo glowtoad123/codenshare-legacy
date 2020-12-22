@@ -11,8 +11,6 @@ export default function Search() {
 
     const router = useRouter()
 
-    dynamic(() => import('./bootstrap.bundle'))
-
     const [searchValue, setsearchValue] = useState("")
     const [searchTagsList, setsearchTagsList] = useState([])
     const [queriedList, setQueriedList] = useState([])
