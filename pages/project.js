@@ -89,11 +89,6 @@ export default function Project({id}) {
         console.log(id)
         getProject()
         settingYourKey()
-        dynamic(() => import('./components/prism'))
-        setTimeout(() => {
-
-            import('./components/prism')
-        }, 3000)
     }, [])
     
     creator && creator.length !== 0 && checkUser()
