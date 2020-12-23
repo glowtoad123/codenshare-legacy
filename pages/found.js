@@ -21,11 +21,6 @@ export default function found({searchedInfo}){
     
 
     async function gettingData(){
-        let savedFoundStatus = await localForage.getItem("foundStatus").then(status => status)
-    
-        savedFoundStatus && await localForage.setItem("foundStatus", false).then(
-            router.reload()
-        )
 
 
         let savedSelection = await localForage.getItem("Selection").then(type => type)
