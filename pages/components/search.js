@@ -39,7 +39,6 @@ export default function Search() {
 
     function settingFoundStatus(){
         localForage.setItem("foundStatus", true)
-        selection === "title" || selection === 'description' ?  router.push(`found?title=${searchValue}`) : router.push(`found?title=${searchTagsList.join(" ")}`)
     }
     const categorySearchList = searchTagsList.join(" ")
     console.log("categorySearchList: " + categorySearchList)
@@ -75,7 +74,10 @@ export default function Search() {
                   <Dropdown.Divider />
                   <Dropdown.Item data onClick={settingSelection} href="#" value="description">description</Dropdown.Item>
                 </DropdownButton>
-                <InputGroup.Append><Button onClick={settingFoundStatus} variant="outline-secondary">Search</Button>
+                <InputGroup.Append>
+                    <Link href={`found?title=${searchValue}`}>
+                        <Button onClick={settingFoundStatus} variant="outline-secondary">Search</Button> 
+                    </Link>
                 </InputGroup.Append>
             </InputGroup>}
             {selection === "categories" && <InputGroup>
@@ -101,7 +103,9 @@ export default function Search() {
                 </DropdownButton>
                 <InputGroup.Append>
                 <Button onClick={settingsearchList} variant="outline-secondary">Add</Button>
+                    <Link href={`found?title=${searchTagsList.join(" ")}`}>
                         <Button onClick={settingFoundStatus} variant="outline-secondary">Search</Button> 
+                    </Link>
                 </InputGroup.Append>
             </InputGroup>}
             </div>
