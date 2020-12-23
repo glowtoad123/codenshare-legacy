@@ -23,7 +23,7 @@ export default function found({searchedInfo}){
     async function gettingData(){
         let savedFoundStatus = await localForage.getItem("foundStatus").then(status => status)
     
-        savedFoundStatus && localForage.setItem("foundStatus", false).then(
+        savedFoundStatus && await localForage.setItem("foundStatus", false).then(
             router.reload()
         )
 
