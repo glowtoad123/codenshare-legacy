@@ -351,6 +351,7 @@ export default function Update({projectId}){
                             {updateList && updateList.map((current, index) => {return (
                                 <div className={styles.update}>
                                     <img 
+                                        alt="delete"
                                         src="/delete.svg"
                                         className={styles.delete}
                                         onClick={() => removeUpdate(index)}

@@ -26,6 +26,7 @@ export default function Advpreview(props) {
             )}</div>
             <div className={styles.projectFooter}>
                 <img 
+                    alt="alt"
                     name={props.project} 
                     src="/delete.svg" 
                     className={styles.delete} 
@@ -37,6 +38,7 @@ export default function Advpreview(props) {
                         href="/update" 
                         className={styles.edit}
                     ><img 
+                        alt="edit"
                         id={props.id} 
                         title={props.description} 
                         name={props.project} 

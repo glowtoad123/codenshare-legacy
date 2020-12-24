@@ -21,7 +21,7 @@ class MyDocument extends Document {
             <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
             <meta name="msapplication-starturl" content="/" />
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
+            <meta name="Description" content="this is a project that allows users to share their projects, what they used to create their projects, and the status of their projects." />
             <link rel="icon"  sizes="512x512" href="/maskable_icon.png" />
             <link rel="apple-touch-icon"  sizes="512x512" href="/maskable_icon.png" />
             <link rel="icon"  sizes="144x144" href="/maskable_icon.png" />

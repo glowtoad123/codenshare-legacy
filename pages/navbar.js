@@ -70,7 +70,7 @@ export default function Navbar(){
                 </>
                 }   
                 {searchStatus && <Search />}
-                <img onClick={toggleNav} src="/navpreview.svg" className={styles.navtoggle} />
+                <img alt="toggle navbar" onClick={toggleNav} src="/navpreview.svg" className={styles.navtoggle} />
         </>
     )
 }

@@ -146,7 +146,7 @@ export default function Myaccount(){
             <>
                 <div className={styles.head}>
                     <h1 className={styles.displaytitle}><strong>{userName}</strong></h1>
-                    <img src="/edit.svg" className={styles.save} onClick={updateName}/>
+                    <img alt="edit" src="/edit.svg" className={styles.save} onClick={updateName}/>
                         
                 </div>
                 {projectsArray.map((project, index) =>

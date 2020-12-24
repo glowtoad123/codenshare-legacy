@@ -23,6 +23,7 @@ export default function Offlinepreview(props) {
                     <p onClick={settingSelection} className={styles.tags}><strong>{category}</strong></p>
             )}</div>
             <img 
+                alt="offlineindicator"
                 src="/offline.svg"
                 className={styles.edit}
             />
