@@ -110,7 +110,7 @@ export default function Project({id}) {
     return(
         <>
             <Navbar />
-        {receivedKey === "" && <><LinearProgress /><script src="./components/prism.js"></script></>}
+        {receivedKey === "" && <LinearProgress />}
             <div className={styles.userDisplay}>
                 <h1 className={styles.displaytitle}>
                     <strong>{projectData.Project_Title}</strong>
