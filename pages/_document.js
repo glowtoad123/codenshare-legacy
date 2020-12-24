@@ -29,6 +29,7 @@ class MyDocument extends Document {
             <link rel="icon"  sizes="192x192" href="/maskable_icon.png" />
             <link rel="apple-touch-icon"  sizes="192x192" href="/maskable_icon.png" />
             <link rel="stylesheet" href="./styles.css" />
+            <noscript>Sorry but you must have javascript to use Codenshare</noscript>
 
         <body>
           <Main />
