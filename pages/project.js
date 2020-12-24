@@ -1,17 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
-import faunadb, { query as q } from "faunadb"
 import Navbar from './navbar'
 import Link from 'next/link'
 import styles from './css/project.module.css'
 import * as localForage from "localforage"
 import { LinearProgress } from '@material-ui/core'
-import dynamic from 'next/dynamic'
-import marked from 'marked';
 import hljs from 'highlight.js'
 import 'markdown-it'
 import MarkdownIt from 'markdown-it'
-import javascript from 'highlight.js/lib/languages/javascript'
 
 export default function Project({id}) {
 
@@ -23,7 +19,6 @@ export default function Project({id}) {
     const [Categories, setCategories] = useState([])
     const [update, setUpdate] = useState([])
     const [creator, setCreator] = useState("")
-    const [deleteStatus, setDeleteStatus] = useState(false)
 
     const router = useRouter()
 
@@ -108,10 +103,6 @@ export default function Project({id}) {
     }
 
     const [devlog, setDevlog] = useState(projectData.Devlog)
-
-/*     setDevlog(current =>
-        
-    ) */
 
     
 

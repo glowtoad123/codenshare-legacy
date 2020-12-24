@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
 import crypto from 'crypto'
-import faunadb, { query as q } from "faunadb"
 import Navbar from './navbar'
-import Link from 'next/link'
 import * as localForage from "localforage"
 import Advpreview from './components/advpreview'
 import Offlinepreview from './components/offlinepreview'
@@ -11,7 +9,6 @@ import styles from './css/account.module.css'
 import { LinearProgress } from '@material-ui/core'
 
 export default function Myaccount(){
-    var serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
 
     const router = useRouter()
 
@@ -20,10 +17,8 @@ export default function Myaccount(){
     const [yourKey, setYourKey] = useState("")
     const [receivedKey, setReceivedKey] = useState("")
     const [projectsArray, setProjectsArray] = useState([])
-    const [projectsIdArray, setProjectsIdArray] = useState([])
     const [networkStatus, setNetworkStatus] = useState(false)
     const [offlineArray, setOfflineArray] = useState([])
-    const [deleteStatus, setDeleteStatus] = useState(false)
 
 
     async function retreivingSavedCredentials(){

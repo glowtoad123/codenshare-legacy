@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
-import faunadb, { query as q } from "faunadb"
 import Navbar from './navbar'
-import Link from 'next/link'
 import * as localForage from "localforage"
 import Preview from './components/preview'
 import styles from './css/account.module.css'
@@ -11,7 +9,6 @@ import { LinearProgress } from '@material-ui/core'
 export default function Account({id}){
 
     const [projectsArray, setProjectsArray] = useState([])
-    const [projectsIdArray, setProjectsIdArray] = useState([])
 
     const router = useRouter()
 

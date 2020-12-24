@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
-import faunadb, { query as q } from "faunadb"
 import styles from "./css/edit.module.css"
 import Navbar from "./navbar"
 import Link from 'next/link'
@@ -18,7 +17,6 @@ const CodeMirror = dynamic(() => {
 }, {ssr: false})
 
 export default function New(){
-    var serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
 
 
     const router = useRouter()

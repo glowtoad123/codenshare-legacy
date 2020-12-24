@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
 import * as localForage from "localforage"
 import styles from './css/nav.module.css'
-import Navprop from './components/navprop'
 import Search from './components/search'
 
 export default function Navbar(){

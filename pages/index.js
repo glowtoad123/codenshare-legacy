@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import faunadb, { query as q } from "faunadb"
 import * as localForage from "localforage"
 import Preview from './components/preview'
 import Offlinepreview from './components/offlinepreview'
@@ -9,7 +8,6 @@ import { LinearProgress } from '@material-ui/core'
 export default function Home(){
     const [projectArray, setProjectArray] =  useState([])
     const [offlineArray, setOfflineArray] = useState([])
-    const [idArray, setIdArray] = useState([])
     const [networkStatus, setNetworkStatus] = useState(false)
     
     async function getProjects(){

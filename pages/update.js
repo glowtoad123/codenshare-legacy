@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
-import faunadb, { query as q } from "faunadb"
 import Navbar from './navbar'
-import Link from 'next/link'
 import styles from './css/edit.module.css'
 import * as localForage from "localforage"
 import { LinearProgress } from '@material-ui/core'
@@ -17,8 +15,6 @@ const CodeMirror = dynamic(() => {
 }, {ssr: false})
 
 export default function Update({projectId}){
-
-    const serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
 
     const [yourKey, setYourKey] = useState("")
     const [receivedKey, setReceivedKey] = useState("")
@@ -40,7 +36,6 @@ export default function Update({projectId}){
     const router = useRouter()
 
     async function getInfo(){
-        let savedUsername = await localForage.getItem("userName").then(cred => cred)
         let savedKey = await localForage.getItem("yourKey").then(cred => cred)
         setYourKey(savedKey)
         let res = await fetch('api/getSingleProject', {

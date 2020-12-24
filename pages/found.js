@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import { Router, useRouter } from 'next/router'
-import faunadb, { query as q } from "faunadb"
 import * as localForage from "localforage"
 import Preview from './components/preview'
 import Navbar from './navbar'
@@ -8,7 +7,6 @@ import styles from './css/project.module.css'
 import { LinearProgress } from '@material-ui/core'
 
 export default function found({searchedInfo}){
-    var serverClient = new faunadb.Client({ secret: process.env.NEXT_FAUNA_KEY });
     const [projectArray, setProjectArray] = useState([])
     const [wholeProjects, setWholeProjects] = useState({})
     const [projectIdArray, setProjectIdArray] = useState([])
