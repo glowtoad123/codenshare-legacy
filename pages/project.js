@@ -27,10 +27,6 @@ export default function Project({id}) {
 
     const router = useRouter()
 
-    hljs.g
-
-    MarkdownIt
-
     hljs.registerLanguage('javascript', require('highlight.js/lib/languages/javascript'));
 
     const md = new MarkdownIt({
@@ -40,7 +36,7 @@ export default function Project({id}) {
               return '<pre class="hljs"><code>' +
                      hljs.highlight(lang, str, true).value +
                      '</code></pre>';
-            } catch (__) {}
+            } catch (err) {console.log(err)}
           }
       
           return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
@@ -95,9 +91,9 @@ export default function Project({id}) {
     creator && creator.length !== 0 && console.log("creator: ", creator)
     const changeLog = update.map(change => change.Changes)
 
-    function settingSelection(){
-        localForage.setItem("Selection", "categories")
-        localForage.setItem("foundStatus", true)
+    async function settingSelection(){
+        await localForage.setItem("Selection", "categories")
+        await localForage.setItem("foundStatus", true)
     }
 
     async function deleteProject() {
