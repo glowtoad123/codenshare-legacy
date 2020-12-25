@@ -41,34 +41,45 @@ export default function Project({id}) {
     hljs.registerLanguage('javascript', require('highlight.js/lib/languages/javascript'));
 
     async function getProject(){
-        const res = await fetch("api/getSingleProject", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({id: id})
-        })
-        let data = await res.json()
 
-        console.log(data)
-        setProjectData(data)
-        setLinkList(data.Links)
-        setRoadmap(data.Roadmap)
-        setCategories(data.Categories)
-        setUpdate(data.Update)
-        setCreator(data.Creator)
+        try{
+            const res = await fetch("api/getSingleProject", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({id: id})
+            })
+            let data = await res.json()
+    
+            console.log(data)
+            setProjectData(data)
+            setLinkList(data.Links)
+            setRoadmap(data.Roadmap)
+            setCategories(data.Categories)
+            setUpdate(data.Update)
+            setCreator(data.Creator)
+        } catch(error) {
+            console.log("getProjectError", error)
+        }
+
     }
 
     async function checkUser(){
-        const res = await fetch('api/checkUser', {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({username: creator}
-            )
-        })
 
-        let data = await res.json()
-        console.log("userData", data.password)
-        console.log("yourkey:", yourKey)
-        setReceivedKey(data.password)
+        try{
+            const res = await fetch('api/checkUser', {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({username: creator}
+                )
+            })
+    
+            let data = await res.json()
+            console.log("userData", data.password)
+            console.log("yourkey:", yourKey)
+            setReceivedKey(data.password)
+        } catch(error){
+            console.log("checkUserError", error)
+        }
     }
 
     async function settingYourKey(){
@@ -92,8 +103,12 @@ export default function Project({id}) {
     const changeLog = update.map(change => change.Changes)
 
     async function settingSelection(){
-        await localForage.setItem("Selection", "categories")
-        await localForage.setItem("foundStatus", true)
+        try{
+            await localForage.setItem("Selection", "categories")
+            await localForage.setItem("foundStatus", true)
+        } catch(error){
+            console.log("settingSelectionError", error)
+        }
     }
 
     async function deleteProject() {
@@ -106,8 +121,6 @@ export default function Project({id}) {
         console.log(data)
         router.push("/")
     }
-
-    const [devlog, setDevlog] = useState(projectData.Devlog)
 
     
 
@@ -194,6 +207,7 @@ export default function Project({id}) {
 
 
 export async function getServerSideProps(context){
+    
     return {props: {
         id: context.query.title
     }}
