@@ -104,6 +104,17 @@
   vertical-align: middle;
 }
 
+.offline {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  vertical-align: middle;
+  display: flex;
+  margin: auto;
+  position: relative;
+  top: 35px;
+}
+
 @media screen and (max-width: 1024px) {
   .display {
     width: 90%;

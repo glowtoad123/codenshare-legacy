@@ -25,7 +25,7 @@ export default function Offlinepreview(props) {
             <img 
                 alt="offlineindicator"
                 src="/offline.svg"
-                className={styles.edit}
+                className={styles.offline}
             />
         </div>
     )
