@@ -14,6 +14,7 @@ export default function Preview(props) {
         <div className={styles.display}>
             <Link href={`/project?title=${props.id}`}><a><h1 className={styles.displaytitle}><strong>{props.project}</strong></h1></a></Link>
             <div className={styles.descriptionDiv}><strong >{props.description}</strong></div>
+            <Link href={`/test?title=${props.id}`}>Test</Link>
             <br />
             <br />
             
