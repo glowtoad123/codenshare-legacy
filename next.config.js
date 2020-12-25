@@ -3,17 +3,18 @@ const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,
 })
 
-/* module.exports = withPWA({
+module.exports = withPWA({
   pwa: {
     dest: 'public',
     register: true,
   },
   env: {
     NEXT_FAUNA_KEY: 'fnADpgTNT1ACEiUC4G_M5eNjnIPvv_eL99-n5nhe'
-  }
-}) */
+  },
+  target: 'serverless'
+})
 
-module.exports = (
+/* module.exports = (
     withMDX({
       pageExtensions: ['js', 'jsx', 'md', 'mdx'],
     }),
@@ -24,4 +25,4 @@ module.exports = (
       },
       target: 'serverless'
     }
-)
+) */
