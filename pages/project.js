@@ -72,9 +72,13 @@ export default function Project({id}) {
     }
 
     async function settingYourKey(){
-        let theKey = await localForage.getItem("yourKey").then(key => key).catch(err => console.log("yourKey error:", err))
-        console.log("theKey", theKey)
-        setYourKey(theKey)
+        try{
+            let theKey = await localForage.getItem("yourKey").then(key => key).catch(err => console.log("yourKey error:", err))
+            console.log("theKey", theKey)
+            setYourKey(theKey)
+        } catch(error) {
+            console.log("settingYourKeyError", error)
+        }
     }
     
     useEffect(() => {
