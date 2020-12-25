@@ -72,7 +72,7 @@ export default function Project({id}) {
     }
 
     async function settingYourKey(){
-        let theKey = await localForage.getItem("yourKey").then(key => key)
+        let theKey = await localForage.getItem("yourKey").ready().then(key => key).catch(err => console.log("yourKey error:", err))
         setYourKey(theKey)
     }
     
