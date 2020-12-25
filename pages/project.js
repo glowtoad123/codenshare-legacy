@@ -79,10 +79,10 @@ export default function Project({id}) {
     useEffect(() => {
         console.log(id)
         getProject()
-        settingYourKey()
+        
     }, [])
     
-    creator && creator.length !== 0 && checkUser()
+    creator && creator.length !== 0 && (settingYourKey(), checkUser())
     creator && creator.length !== 0 && console.log("creator: ", creator)
     const changeLog = update.map(change => change.Changes)
 
