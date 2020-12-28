@@ -16,16 +16,24 @@
 
 .displaytitle {
   background-color: #2f3e46;
-  /* box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, .22), 0 4.8px 14.4px 0 rgba(0, 0, 0, .18),; */
-  color: white;
-  /* display: inline-block; */
+  color: #fff;
   text-align: center;
   z-index: 0;
+  -moz-border-radius: 12px 12px 0 0;
   border-radius: 12px 12px 0 0;
   cursor: pointer;
   vertical-align: middle;
   padding: 20px;
-  margin: 0px;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.displaytitle:hover{
+  text-overflow: unset;
+  white-space: unset;
+  overflow: unset;
 }
 
 .descriptionDiv {
