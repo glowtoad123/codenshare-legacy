@@ -13,14 +13,19 @@ export default function Navbar(){
         setNavCheck(current => !current)
     }
 
-    localForage.getItem("yourKey").then(ret => {
-        setUserId(ret)
-    })
+    async function getData(){
+        let theKey = await localForage.getItem("yourKey").then(ret => ret)
+        setUserId(theKey)
+    }
 
     function switchToSearch(){
         setNavCheck(false)
         setSearchStatus(current => !current)
     }
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     return(
         <>

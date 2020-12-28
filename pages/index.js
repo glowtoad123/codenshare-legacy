@@ -45,7 +45,7 @@ export default function Home(){
         setNetworkStatus(true)
     }
 
-    if (!networkStatus && offlineArray.length === 0) {
+    if (!networkStatus && offlineArray && offlineArray.length === 0) {
         getOfflineData()
         console.log("this is not offline")
     }
@@ -55,7 +55,7 @@ export default function Home(){
         <>
             <Navbar />
             {projectArray && offlineArray && projectArray.length === 0 && offlineArray.length === 0 && <LinearProgress />}
-            {projectArray.length !== 0 ? projectArray.map(
+            {projectArray && projectArray.length !== 0 ? projectArray.map(
                 (project, index) => <Preview 
                     id={project.ref['@ref'].id}
                     project={project.data.Project_Title}
@@ -63,7 +63,7 @@ export default function Home(){
                     creator={project.data.Creator}
                     categories={project.data.Categories}
                 />
-            ) : offlineArray.map(
+            ) : offlineArray && offlineArray.length !== 0 && offlineArray.map(
                 (project, index) => <Offlinepreview 
                     id={project.ref['@ref'].id}
                     project={project.data.Project_Title}

@@ -75,8 +75,6 @@ export default function found({searchedInfo}){
         gettingData()
     }, [])
 
-    gettingData()
-
     return(
         <>
         <Navbar />
