@@ -11,6 +11,8 @@ export default function Search() {
 
     const router = useRouter()
 
+    const thisUrl = router.pathname
+
     const [searchValue, setsearchValue] = useState("")
     const [searchTagsList, setsearchTagsList] = useState([])
     const [queriedList, setQueriedList] = useState([])
@@ -44,7 +46,7 @@ export default function Search() {
     console.log("categorySearchList: " + categorySearchList)
 
     return (
-        <div className={styles.search}>
+        thisUrl === '/found' ? <div className={styles.search}>
             <div className={styles.searchContainer}>
                 {/* <input 
                     type="search" 
@@ -75,7 +77,7 @@ export default function Search() {
                   <Dropdown.Item data onClick={settingSelection} href="#" value="description">description</Dropdown.Item>
                 </DropdownButton>
                 <InputGroup.Append>
-                    <Link href={`found?title=${searchValue}`}>
+                    <Link href={`discovered?title=${searchValue}`}>
                         <Button onClick={settingFoundStatus} variant="outline-secondary">Search</Button> 
                     </Link>
                 </InputGroup.Append>
@@ -103,7 +105,7 @@ export default function Search() {
                 </DropdownButton>
                 <InputGroup.Append>
                 <Button onClick={settingsearchList} variant="outline-secondary">Add</Button>
-                    <Link href={`found?title=${searchTagsList.join(" ")}`}>
+                    <Link href={`discovered?title=${searchTagsList.join(" ")}`}>
                         <Button onClick={settingFoundStatus} variant="outline-secondary">Search</Button> 
                     </Link>
                 </InputGroup.Append>
@@ -118,6 +120,82 @@ export default function Search() {
                     </div>
                 </div> 
             }   
+        </div> : 
+
+<div className={styles.search}>
+<div className={styles.searchContainer}>
+    {/* <input 
+        type="search" 
+        placeholder="search" 
+        className={styles.searchfield} 
+        value={searchValue} 
+        onChange={settingsearchValue}
+    /> */}
+{(selection === "title" || selection === "description" || selection === "") && <InputGroup>
+    <FormControl
+      placeholder="Search"
+      aria-label="Search"
+      aria-describedby="basic-addon2"
+      value={searchValue} 
+      onChange={settingsearchValue}
+    />
+
+    <DropdownButton
+      as={InputGroup.Append}
+      variant="outline-secondary"
+      title={selection}
+      id="input-group-dropdown-2"
+    >
+      <Dropdown.Item data onClick={settingSelection} href="#" value="categories">categories</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item data onClick={settingSelection} href="#" value="title">title</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item data onClick={settingSelection} href="#" value="description">description</Dropdown.Item>
+    </DropdownButton>
+    <InputGroup.Append>
+        <Link href={`found?title=${searchValue}`}>
+            <Button onClick={settingFoundStatus} variant="outline-secondary">Search</Button> 
+        </Link>
+    </InputGroup.Append>
+</InputGroup>}
+{selection === "categories" && <InputGroup>
+    <FormControl
+      placeholder="Search"
+      aria-label="Search"
+      aria-describedby="basic-addon2"
+      value={searchValue} 
+      onChange={settingsearchValue}
+    />
+
+    <DropdownButton
+      as={InputGroup.Append}
+      variant="outline-secondary"
+      title={selection}
+      id="input-group-dropdown-2"
+    >
+      <Dropdown.Item data onClick={settingSelection} href="#" value="categories">categories</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item data onClick={settingSelection} href="#" value="title">title</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item data onClick={settingSelection} href="#" value="description">description</Dropdown.Item>
+    </DropdownButton>
+    <InputGroup.Append>
+    <Button onClick={settingsearchList} variant="outline-secondary">Add</Button>
+        <Link href={`found?title=${searchTagsList.join(" ")}`}>
+            <Button onClick={settingFoundStatus} variant="outline-secondary">Search</Button> 
+        </Link>
+    </InputGroup.Append>
+</InputGroup>}
+</div>
+<br />
+{selection === "categories" &&
+    <div className="searchdiv">
+        <div className={styles.list}>
+            <label className="searchLabel">Categories: </label>
+            {searchTagsList.map(each => <p className={styles.tags}><strong>{each}</strong></p>)}
         </div>
+    </div> 
+}   
+</div>
     );
 }
