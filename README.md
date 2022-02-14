@@ -134,7 +134,7 @@ Codentake was an upgraded version of Codetake that maintained similar file names
 
 Nextjs had a module called useRouter that allowed users to pull the dynamic id to be used to collect data; however, I did not actually understand what routes were. To make use of dynamic urls, I literally typed out "url" in Visual Studio Code in hope that there would be some obsure module that would allow me to make use of the dynamic urls. Thankfully, there was. It was called **getURL**. In order for me to use it, I usually typed the following: 
 
-```javascript
+``` javascript
 const [urlName, seturlName] = useState("")
 const [altId, setaltId] = useState("")
 
@@ -147,7 +147,6 @@ const userId = urlName.slice(19, urlName.length)
 //the number often represented the start of the dynamic url that represented an id or data
 
 userId.includes("%20") ? (setaltId(userId.split("%20").join(" "))) : console.log("all good")
-
 ```
 
 # Codenshare
